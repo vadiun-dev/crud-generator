@@ -6,7 +6,6 @@ use Hitocean\CrudGenerator\ModelAttributeConfig;
 
 class BooleanAttr implements ModelAttributeType
 {
-
     public function needsModelCast(): bool
     {
         return true;
@@ -24,10 +23,10 @@ class BooleanAttr implements ModelAttributeType
 
     public function migrationFunction(ModelAttributeConfig $config): string
     {
-        $base =  "boolean('{$config->name}')";
+        $base = "boolean('{$config->name}')";
 
-        if($config->isNullable){
-            return $base . '->nullable()';
+        if ($config->isNullable) {
+            return $base.'->nullable()';
         }
 
         return $base;

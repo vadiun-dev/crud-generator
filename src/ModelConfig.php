@@ -15,5 +15,4 @@ class ModelConfig
         public bool $has_abm
     ) {
     }
-
 }

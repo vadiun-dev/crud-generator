@@ -20,7 +20,8 @@ class CrudGeneratorCommand extends Command
         $migration_generator = new \Hitocean\CrudGenerator\Generators\MigrationGenerator();
         $migration_generator->create($config);
 
-        $this->info("generado modelo");
+        $this->info('generado modelo');
+
         return self::SUCCESS;
     }
 }

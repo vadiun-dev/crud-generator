@@ -2,9 +2,9 @@
 
 namespace Hitocean\CrudGenerator;
 
+use Hitocean\CrudGenerator\Commands\CrudGeneratorCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Hitocean\CrudGenerator\Commands\CrudGeneratorCommand;
 
 class CrudGeneratorServiceProvider extends PackageServiceProvider
 {

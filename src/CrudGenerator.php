@@ -8,7 +8,6 @@ use Hitocean\CrudGenerator\ModelAttributeTypes\DateTimeAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\FloatAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\IntAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
-use Illuminate\Support\Collection;
 
 class CrudGenerator
 {
@@ -18,30 +17,29 @@ class CrudGenerator
     public static function handle(): array
     {
         $iterator = new DirectoryIterator(base_path('generators'));
-        foreach ($iterator as $json_conf)
-        {
-            if (!$json_conf->isDot()) {
+        foreach ($iterator as $json_conf) {
+            if (! $json_conf->isDot()) {
                 $configData = json_decode(file_get_contents($json_conf->getPath().'/'.$json_conf->getFilename()));
                 $configs[] = new ModelConfig(
                     $configData->modelName,
                     $configData->folder,
-                    collect($configData->attributes)->map(fn($attribute) =>
-                         new ModelAttributeConfig($attribute->name, static::mapAttrType($attribute->type), static::isOptional($attribute->type))
+                    collect($configData->attributes)->map(fn ($attribute) => new ModelAttributeConfig($attribute->name, static::mapAttrType($attribute->type), static::isOptional($attribute->type))
                     ),
                     $configData->tableName,
                     $configData->makeCrud
                 );
             }
         }
+
         return $configs;
     }
 
     private static function mapAttrType(string $type)
     {
-        if(static::isOptional($type))
-        {
+        if (static::isOptional($type)) {
             $type = str_replace('?', '', $type);
         }
+
         return match ($type) {
             'string' => new StringAttr(),
             'integer','int' => new IntAttr(),

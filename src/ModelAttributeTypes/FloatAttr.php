@@ -6,7 +6,6 @@ use Hitocean\CrudGenerator\ModelAttributeConfig;
 
 class FloatAttr implements ModelAttributeType
 {
-
     public function needsModelCast(): bool
     {
         return false;
@@ -14,7 +13,7 @@ class FloatAttr implements ModelAttributeType
 
     public function modelCast(): string
     {
-        throw new \Exception("FloatAttr does not need a model cast.");
+        throw new \Exception('FloatAttr does not need a model cast.');
     }
 
     public function fakerFunction(): string
@@ -26,8 +25,8 @@ class FloatAttr implements ModelAttributeType
     {
         $base = "float('{$config->name}')";
 
-        if($config->isNullable){
-            return $base . '->nullable()';
+        if ($config->isNullable) {
+            return $base.'->nullable()';
         }
 
         return $base;

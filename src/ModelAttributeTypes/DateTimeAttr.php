@@ -6,7 +6,6 @@ use Hitocean\CrudGenerator\ModelAttributeConfig;
 
 class DateTimeAttr implements ModelAttributeType
 {
-
     public function needsModelCast(): bool
     {
         return true;
@@ -26,7 +25,7 @@ class DateTimeAttr implements ModelAttributeType
     {
         $base = "dateTime('{$config->name}')";
         if ($config->isNullable) {
-            return $base . '->nullable()';
+            return $base.'->nullable()';
         }
 
         return $base;

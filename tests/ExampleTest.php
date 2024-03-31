@@ -1,10 +1,7 @@
 <?php
 
-use App\Console\Generators\Config\ConfigFactory;
-use Illuminate\Filesystem\Filesystem;
-
 it('can test', function () {
-    #dd(__DIR__.'/..');
+    //dd(__DIR__.'/..');
     $config = \Hitocean\CrudGenerator\CrudGenerator::handle()[0];
 
     $factory_creator = new \Hitocean\CrudGenerator\Generators\FactoryGenerator();
