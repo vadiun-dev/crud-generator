@@ -3,7 +3,6 @@
 namespace Hitocean\CrudGenerator\Generators;
 
 use Hitocean\CrudGenerator\ModelConfig;
-use Illuminate\Filesystem\Filesystem;
 use Nette\PhpGenerator\PhpFile;
 
 class ModelGenerator extends FileGenerator
@@ -16,22 +15,22 @@ class ModelGenerator extends FileGenerator
         $has_factory_import = "Illuminate\Database\Eloquent\Factories\HasFactory";
 
         $namespace = $file->addNamespace('Src\\'.$config->folder)
-                          ->addUse($model_import)
-                          ->addUse($has_factory_import);
+            ->addUse($model_import)
+            ->addUse($has_factory_import);
 
         $class = $namespace->addClass($config->modelName)
-                           ->setExtends($model_import);
+            ->setExtends($model_import);
 
         $class->addTrait($has_factory_import);
 
         $class->addProperty('table', $config->tableName)
-                            ->setVisibility('protected');
+            ->setVisibility('protected');
 
-        $class->addProperty('fillable', $config->attributes->map(fn($attr) => $attr->name)->toArray())
-        ->setVisibility('protected');
+        $class->addProperty('fillable', $config->attributes->map(fn ($attr) => $attr->name)->toArray())
+            ->setVisibility('protected');
 
-        $class->addProperty('casts', $config->attributes->filter(fn($attr) => $attr->type->needsModelCast())->mapWithKeys(fn($attr) => [$attr->name => $attr->type->modelCast()])->toArray())
-        ->setVisibility('protected');
+        $class->addProperty('casts', $config->attributes->filter(fn ($attr) => $attr->type->needsModelCast())->mapWithKeys(fn ($attr) => [$attr->name => $attr->type->modelCast()])->toArray())
+            ->setVisibility('protected');
 
         $this->createFile($this->filePath($config), $file);
 

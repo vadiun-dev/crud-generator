@@ -13,7 +13,7 @@ class StringAttr implements ModelAttributeType
 
     public function modelCast(): string
     {
-        throw new \Exception("FloatAttr does not need a model cast.");
+        throw new \Exception('FloatAttr does not need a model cast.');
     }
 
     public function fakerFunction(): string
@@ -23,10 +23,10 @@ class StringAttr implements ModelAttributeType
 
     public function migrationFunction(ModelAttributeConfig $config): string
     {
-        $base =  "string('{$config->name}')";
+        $base = "string('{$config->name}')";
 
-        if($config->isNullable){
-            return $base . '->nullable()';
+        if ($config->isNullable) {
+            return $base.'->nullable()';
         }
 
         return $base;

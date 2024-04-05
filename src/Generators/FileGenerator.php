@@ -24,7 +24,7 @@ abstract class FileGenerator
         $directoryPath = dirname($path);
 
         // Verificar si el directorio ya existe
-        if (!$filesystem->isDirectory($directoryPath)) {
+        if (! $filesystem->isDirectory($directoryPath)) {
             // Crear el directorio y todos los directorios necesarios
             $filesystem->makeDirectory($directoryPath, 0755, true);
         }

@@ -2,10 +2,10 @@
 
 namespace Hitocean\CrudGenerator\Tests;
 
+use Hitocean\CrudGenerator\CrudGeneratorServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\App;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Hitocean\CrudGenerator\CrudGeneratorServiceProvider;
 
 class TestCase extends Orchestra
 {

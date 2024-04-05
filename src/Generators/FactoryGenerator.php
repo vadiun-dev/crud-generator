@@ -16,22 +16,21 @@ class FactoryGenerator extends FileGenerator
         $model_import = ModelGenerator::getImport($config);
 
         $namespace = $file->addNamespace('Database\Factories')
-                          ->addUse($model_import)
-                          ->addUse($factory_import);
+            ->addUse($model_import)
+            ->addUse($factory_import);
 
         $class = $namespace->addClass($config->modelName.'Factory')
-                           ->setExtends($factory_import);
-
+            ->setExtends($factory_import);
 
         $class->addProperty('model', new Literal($config->modelName.'::class'))
-              ->setVisibility('protected');
+            ->setVisibility('protected');
 
         $class->addMethod('definition')
-              ->addBody('return [')
-              ->addBody(
-                collect($config->attributes)->map(fn($attr) => "'{$attr->name}' => \$this->faker->{$attr->type->fakerFunction()}," )->implode("\n")
-              )
-        ->addBody('];');
+            ->addBody('return [')
+            ->addBody(
+                collect($config->attributes)->map(fn ($attr) => "'{$attr->name}' => \$this->faker->{$attr->type->fakerFunction()},")->implode("\n")
+            )
+            ->addBody('];');
 
         $this->createFile(database_path('factories/'.$config->modelName.'Factory.php'), $file);
     }
