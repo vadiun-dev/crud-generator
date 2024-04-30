@@ -13,7 +13,7 @@ class StringAttr implements ModelAttributeType
 
     public function modelCast(): string
     {
-        throw new \Exception('FloatAttr does not need a model cast.');
+        throw new \Exception('StringAttr does not need a model cast.');
     }
 
     public function fakerFunction(): string

@@ -2,6 +2,7 @@
 
 namespace Hitocean\CrudGenerator\ModelAttributeTypes;
 
+use Exception;
 use Hitocean\CrudGenerator\ModelAttributeConfig;
 
 class FloatAttr implements ModelAttributeType
@@ -13,7 +14,7 @@ class FloatAttr implements ModelAttributeType
 
     public function modelCast(): string
     {
-        throw new \Exception('FloatAttr does not need a model cast.');
+        throw new Exception('FloatAttr does not need a model cast.');
     }
 
     public function fakerFunction(): string

@@ -46,7 +46,7 @@ class CrudGenerator
             'boolean','bool' => new BooleanAttr(),
             'datetime' => new DateTimeAttr(),
             'float' => new FloatAttr(),
-            default => throw new \Exception('Invalid attribute type'),
+            default => throw new \Exception("Invalid attribute type: $type"),
         };
     }
 
