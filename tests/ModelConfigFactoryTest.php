@@ -73,11 +73,11 @@ it('throws exception when attribute name is missing', function ($attribute) {
 })->with([
     [['name' => 'first_name']],
     [['type' => 'string']],
-    [[]]
- ])
+    [[]],
+])
     ->throws(\Exception::class, 'Every attribute must have a name and a type');
 
-it('maps attributes types', function($type, $expected){
+it('maps attributes types', function ($type, $expected) {
 
     $data = [
         'modelName' => 'Client',
@@ -100,9 +100,9 @@ it('maps attributes types', function($type, $expected){
     ['bool', BooleanAttr::class],
     ['datetime', DateTimeAttr::class],
     ['float', FloatAttr::class],
- ]);
+]);
 
-it('maps optional attributes types', function($type, $expected){
+it('maps optional attributes types', function ($type, $expected) {
 
     $data = [
         'modelName' => 'Client',
@@ -127,4 +127,4 @@ it('maps optional attributes types', function($type, $expected){
     ['bool', BooleanAttr::class],
     ['datetime', DateTimeAttr::class],
     ['float', FloatAttr::class],
- ]);
+]);

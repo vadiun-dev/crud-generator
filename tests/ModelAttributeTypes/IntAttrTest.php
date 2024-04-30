@@ -26,4 +26,3 @@ it('returns migration function', function () {
     $config = new \Hitocean\CrudGenerator\ModelAttributeConfig('name', $booleanAttr, true);
     expect($booleanAttr->migrationFunction($config))->toBe("integer('name')->nullable()");
 });
-
