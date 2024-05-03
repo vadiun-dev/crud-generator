@@ -20,10 +20,10 @@ it('returns faker function', function () {
 it('returns migration function', function () {
     $booleanAttr = new IntAttr();
 
-    $config = new \Hitocean\CrudGenerator\ModelAttributeConfig('name', $booleanAttr, false);
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, false);
     expect($booleanAttr->migrationFunction($config))->toBe("integer('name')");
 
-    $config = new \Hitocean\CrudGenerator\ModelAttributeConfig('name', $booleanAttr, true);
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, true);
     expect($booleanAttr->migrationFunction($config))->toBe("integer('name')->nullable()");
 });
 

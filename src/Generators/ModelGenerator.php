@@ -2,7 +2,7 @@
 
 namespace Hitocean\CrudGenerator\Generators;
 
-use Hitocean\CrudGenerator\ModelConfig;
+use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
 use Nette\PhpGenerator\PhpFile;
 
 class ModelGenerator extends FileGenerator
@@ -14,7 +14,7 @@ class ModelGenerator extends FileGenerator
         $model_import = "Illuminate\Database\Eloquent\Model";
         $has_factory_import = "Illuminate\Database\Eloquent\Factories\HasFactory";
 
-        $namespace = $file->addNamespace('Src\\'.$config->folder)
+        $namespace = $file->addNamespace($config->folder.'\\Models')
             ->addUse($model_import)
             ->addUse($has_factory_import);
 
@@ -38,7 +38,7 @@ class ModelGenerator extends FileGenerator
 
     public function filePath(ModelConfig $config): string
     {
-        return base_path('src/'.$config->folder.'/Models/'.$config->modelName.'.php');
+        return base_path($config->folder.'/Models/'.$config->modelName.'.php');
     }
 
     public static function getImport(ModelConfig $config): string

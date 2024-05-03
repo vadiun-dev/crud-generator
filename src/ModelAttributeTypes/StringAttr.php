@@ -2,7 +2,7 @@
 
 namespace Hitocean\CrudGenerator\ModelAttributeTypes;
 
-use Hitocean\CrudGenerator\ModelAttributeConfig;
+use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
 
 class StringAttr implements ModelAttributeType
 {

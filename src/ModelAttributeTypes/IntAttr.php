@@ -3,7 +3,7 @@
 namespace Hitocean\CrudGenerator\ModelAttributeTypes;
 
 use Exception;
-use Hitocean\CrudGenerator\ModelAttributeConfig;
+use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
 
 class IntAttr implements ModelAttributeType
 {

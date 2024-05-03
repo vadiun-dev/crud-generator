@@ -2,7 +2,7 @@
 
 namespace Hitocean\CrudGenerator\Generators;
 
-use Hitocean\CrudGenerator\ModelConfig;
+use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
 use Nette\PhpGenerator\Literal;
 use Nette\PhpGenerator\PhpFile;
 

@@ -34,12 +34,6 @@ it('throws exception when missing keys', function () {
     $data = [
         'attributes' => [
             ['name' => 'srl', 'type' => 'int'],
-            ['name' => 'num_client_seidor', 'type' => 'int'],
-            ['name' => 'name', 'type' => 'string'],
-            ['name' => 'cuit', 'type' => 'string'],
-            ['name' => 'phone', 'type' => 'string'],
-            ['name' => 'live_release_date', 'type' => 'datetime'],
-
         ],
     ];
 

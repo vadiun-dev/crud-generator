@@ -18,10 +18,10 @@ it('returns faker function', function () {
 it('returns migration function', function () {
     $booleanAttr = new \Hitocean\CrudGenerator\ModelAttributeTypes\DateTimeAttr();
 
-    $config = new \Hitocean\CrudGenerator\ModelAttributeConfig('name', $booleanAttr, false);
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, false);
     expect($booleanAttr->migrationFunction($config))->toBe("dateTime('name')");
 
-    $config = new \Hitocean\CrudGenerator\ModelAttributeConfig('name', $booleanAttr, true);
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, true);
     expect($booleanAttr->migrationFunction($config))->toBe("dateTime('name')->nullable()");
 });
 
