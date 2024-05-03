@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration";
 
-        $class = new ClassType(null);;
+        $class = new ClassType(null);
 
         $class->addMethod('up')
             ->addBody('Schema::create(\''.$config->tableName.'\', function (Blueprint $table) {')
@@ -36,6 +36,6 @@ return new class extends Migration";
             ->setReturnType('void');
 
         $filename = now()->format('Y_m_d_His').'_create_'.$config->tableName.'_table';
-        $this->createFile(database_path('migrations/'.$filename.'.php'), $f. $class.';');
+        $this->createFile(database_path('migrations/'.$filename.'.php'), $f.$class.';');
     }
 }

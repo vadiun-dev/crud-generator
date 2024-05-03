@@ -24,4 +24,3 @@ it('returns migration function', function () {
     $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, true);
     expect($booleanAttr->migrationFunction($config))->toBe("dateTime('name')->nullable()");
 });
-

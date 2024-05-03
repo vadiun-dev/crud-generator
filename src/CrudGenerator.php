@@ -22,5 +22,4 @@ class CrudGenerator
 
         return $configs;
     }
-
 }

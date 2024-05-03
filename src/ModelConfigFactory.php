@@ -58,9 +58,8 @@ class ModelConfigFactory
         $missingKeys = collect($requiredKeys)->diff(array_keys($data));
 
         if ($missingKeys->isNotEmpty()) {
-            throw new \Exception('Missing keys: '. $missingKeys->implode(', '));
+            throw new \Exception('Missing keys: '.$missingKeys->implode(', '));
         }
-
 
         if (! is_array($data['attributes'])) {
             throw new \Exception('Attributes must be an array');
