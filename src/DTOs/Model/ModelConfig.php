@@ -1,6 +1,6 @@
 <?php
 
-namespace Hitocean\CrudGenerator;
+namespace Hitocean\CrudGenerator\DTOs\Model;
 
 use Illuminate\Support\Collection;
 

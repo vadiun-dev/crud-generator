@@ -2,26 +2,24 @@
 
 namespace Hitocean\CrudGenerator\Generators;
 
-use Hitocean\CrudGenerator\ModelAttributeConfig;
-use Hitocean\CrudGenerator\ModelConfig;
-use Nette\PhpGenerator\PhpFile;
+use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
+use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
+use Nette\PhpGenerator\ClassType;
 
 class MigrationGenerator extends FileGenerator
 {
     public function create(ModelConfig $config): void
     {
-        $file = new PhpFile();
 
-        $migration_import = "Illuminate\Database\Migrations\Migration";
-        $blueprint_import = "Illuminate\Database\Schema\Blueprint";
-        $schema_import = "Illuminate\Support\Facades\Schema";
+        $f = "<?php
 
-        $file->addUse($migration_import)
-            ->addUse($schema_import)
-            ->addUse($blueprint_import);
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-        $class = $file->addClass($config->modelName.'Migration')
-            ->setExtends($migration_import);
+return new class extends Migration";
+
+        $class = new ClassType(null);
 
         $class->addMethod('up')
             ->addBody('Schema::create(\''.$config->tableName.'\', function (Blueprint $table) {')
@@ -33,6 +31,11 @@ class MigrationGenerator extends FileGenerator
             ->addBody('            });')
             ->setReturnType('void');
 
-        $this->createFile(database_path('migrations/'.$config->modelName.'.php'), $file);
+        $class->addMethod('down')
+            ->addBody('Schema::dropIfExists(\''.$config->tableName.'\');')
+            ->setReturnType('void');
+
+        $filename = now()->format('Y_m_d_His').'_create_'.$config->tableName.'_table';
+        $this->createFile(database_path('migrations/'.$filename.'.php'), $f.$class.';');
     }
 }

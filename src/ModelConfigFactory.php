@@ -2,6 +2,8 @@
 
 namespace Hitocean\CrudGenerator;
 
+use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
+use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
 use Hitocean\CrudGenerator\ModelAttributeTypes\BooleanAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\DateTimeAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\FloatAttr;

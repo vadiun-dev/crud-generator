@@ -2,12 +2,13 @@
 
 namespace Hitocean\CrudGenerator\Generators;
 
-use Hitocean\CrudGenerator\ModelConfig;
+use Hitocean\CrudGenerator\DTOs\Controller\ControllerConfig;
+use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
 use Illuminate\Filesystem\Filesystem;
 
 abstract class FileGenerator
 {
-    abstract public function create(ModelConfig $config): void;
+    abstract public function create(ModelConfig|ControllerConfig $config): void;
 
     protected function createFile(string $path, string $file_content): void
     {
