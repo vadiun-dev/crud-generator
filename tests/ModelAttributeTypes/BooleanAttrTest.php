@@ -12,7 +12,7 @@ it('returns model cast', function () {
 
 it('returns faker function', function () {
     $booleanAttr = new \Hitocean\CrudGenerator\ModelAttributeTypes\BooleanAttr();
-    expect($booleanAttr->fakerFunction())->toBe('boolean');
+    expect($booleanAttr->fakerFunction())->toBe('$this->faker->boolean');
 });
 
 it('returns migration function', function () {

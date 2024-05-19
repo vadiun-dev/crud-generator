@@ -12,7 +12,7 @@ it('returns model cast', function () {
 
 it('returns faker function', function () {
     $booleanAttr = new \Hitocean\CrudGenerator\ModelAttributeTypes\DateTimeAttr();
-    expect($booleanAttr->fakerFunction())->toBe('dateTime');
+    expect($booleanAttr->fakerFunction())->toBe('$this->faker->dateTime');
 });
 
 it('returns migration function', function () {

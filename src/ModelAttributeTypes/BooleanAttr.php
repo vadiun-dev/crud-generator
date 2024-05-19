@@ -18,7 +18,7 @@ class BooleanAttr implements ModelAttributeType
 
     public function fakerFunction(): string
     {
-        return 'boolean';
+        return '$this->faker->boolean';
     }
 
     public function migrationFunction(ModelAttributeConfig $config): string
@@ -30,5 +30,31 @@ class BooleanAttr implements ModelAttributeType
         }
 
         return $base;
+    }
+
+    public function dataType(ModelAttributeConfig $config): string
+    {
+        return 'bool';
+    }
+
+    public function resourceType(ModelAttributeConfig $config): string
+    {
+        $base =  'bool';
+
+        if($config->isNullable){
+            return '?'.$base;
+        }
+
+        return $base;
+    }
+
+    public function needsImport(): bool
+    {
+        return false;
+    }
+
+    public function importPath(): string
+    {
+        throw new \Exception('BooleanAttr does not need an import path.');
     }
 }

@@ -14,7 +14,7 @@ it('returns model cast', function () {
 
 it('returns faker function', function () {
     $booleanAttr = new IntAttr();
-    expect($booleanAttr->fakerFunction())->toBe('randomNumber(5)');
+    expect($booleanAttr->fakerFunction())->toBe('$this->faker->randomNumber(5)');
 });
 
 it('returns migration function', function () {

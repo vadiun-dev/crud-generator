@@ -1,7 +1,7 @@
 <?php
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
-use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
+use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
 use Hitocean\CrudGenerator\Generators\MigrationGenerator;
 use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
 

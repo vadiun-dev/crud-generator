@@ -14,7 +14,7 @@ it('returns model cast', function () {
 
 it('returns faker function', function () {
     $booleanAttr = new StringAttr();
-    expect($booleanAttr->fakerFunction())->toBe('word');
+    expect($booleanAttr->fakerFunction())->toBe('$this->faker->word');
 });
 
 it('returns migration function', function () {

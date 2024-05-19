@@ -18,7 +18,7 @@ class DateTimeAttr implements ModelAttributeType
 
     public function fakerFunction(): string
     {
-        return 'dateTime';
+        return '$this->faker->dateTime';
     }
 
     public function migrationFunction(ModelAttributeConfig $config): string
@@ -29,5 +29,36 @@ class DateTimeAttr implements ModelAttributeType
         }
 
         return $base;
+    }
+
+    public function dataType(ModelAttributeConfig $config): string
+    {
+        $base =  'Carbon';
+
+        if($config->isNullable){
+            return '?'.$base;
+        }
+
+        return $base;
+    }
+
+    public function resourceType(ModelAttributeConfig $config): string
+    {
+        $base =  'Carbon';
+
+        if($config->isNullable){
+            return '?'.$base;
+        }
+
+        return $base;
+    }
+    public function needsImport(): bool
+    {
+        return true;
+    }
+
+    public function importPath(): string
+    {
+        return 'Carbon\Carbon';
     }
 }

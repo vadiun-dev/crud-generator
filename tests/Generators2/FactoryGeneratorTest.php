@@ -1,20 +1,22 @@
 <?php
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
-use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
+use Hitocean\CrudGenerator\Generators\FileConfigs\FactoryConfig;
+use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
+use Hitocean\CrudGenerator\ModelAttributeTypes\BelongsToAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
 use Nette\PhpGenerator\Literal;
 
 beforeEach(function () {
     $this->generator = new \Hitocean\CrudGenerator\Generators\FactoryGenerator();
-    $this->simpleModelConfig = new ModelConfig(
-        'Client', 'Client', collect([
+    $this->simpleModelConfig = new FactoryConfig(
+        collect([
             new ModelAttributeConfig(
                 'first_name',
                 new StringAttr(),
                 false
             ),
-        ]), 'clients', true
+        ]), 'Src\Client\Models\Client'
     );
 
     $this->generator->create($this->simpleModelConfig);
@@ -35,6 +37,47 @@ it('creates a factory file', function () {
 
 it('has correct namespace', function () {
     expect($this->classFile->getNamespace()->getName())->toBe('Database\Factories');
+});
+
+it('has correct imports', function () {
+    expect($this->classFile->getNamespace()->getUses())
+        ->toHaveCount(2)
+        ->toBe([
+            'Factory' => 'Illuminate\Database\Eloquent\Factories\Factory',
+            'Client' => 'Src\Client\Models\Client',
+        ]);
+});
+
+it('imports when relationship exists', function () {
+    $config = new FactoryConfig(
+         collect([
+            new ModelAttributeConfig(
+                'first_name',
+                new StringAttr(),
+                false
+            ),
+            new ModelAttributeConfig(
+                'client',
+                new BelongsToAttr('Src\Models\Product', 'products', 'product'),
+                false
+            ),
+        ]), 'Src\Client\Models\Client'
+    );
+
+    $this->generator->create($config);
+
+    $file = Nette\PhpGenerator\PhpFile::fromCode(file_get_contents(base_path('database/factories/ClientFactory.php')));
+    $class = $file->getClasses();
+
+    $classFile = $class['Database\Factories\ClientFactory'];
+
+    expect($classFile->getNamespace()->getUses())
+        ->toHaveCount(3)
+        ->toBe([
+            'Factory' => 'Illuminate\Database\Eloquent\Factories\Factory',
+            'Client' => 'Src\Client\Models\Client',
+            'Product' => 'Src\Models\Product',
+        ]);
 });
 
 it('has correct class name', function () {
@@ -59,3 +102,5 @@ it('has correct methods', function () {
         ->toContain('];')
         ->and($this->classFile->getMethods()['definition']->getVisibility())->toBe('public');
 });
+
+

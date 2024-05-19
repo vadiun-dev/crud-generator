@@ -14,7 +14,7 @@ it('returns model cast', function () {
 
 it('returns faker function', function () {
     $booleanAttr = new FloatAttr();
-    expect($booleanAttr->fakerFunction())->toBe('randomFloat(2, 0, 100)');
+    expect($booleanAttr->fakerFunction())->toBe('$this->faker->randomFloat(2, 0, 100)');
 });
 
 it('returns migration function', function () {

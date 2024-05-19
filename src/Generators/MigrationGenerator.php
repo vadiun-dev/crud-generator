@@ -3,12 +3,12 @@
 namespace Hitocean\CrudGenerator\Generators;
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
-use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
+use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
 use Nette\PhpGenerator\ClassType;
 
 class MigrationGenerator extends FileGenerator
 {
-    public function create(ModelConfig $config): void
+    public function create($config): void
     {
 
         $f = "<?php

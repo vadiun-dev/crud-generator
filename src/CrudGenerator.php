@@ -3,7 +3,7 @@
 namespace Hitocean\CrudGenerator;
 
 use DirectoryIterator;
-use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
+use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
 
 class CrudGenerator
 {

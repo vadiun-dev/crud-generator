@@ -2,36 +2,43 @@
 
 namespace Hitocean\CrudGenerator\Generators;
 
-use Hitocean\CrudGenerator\DTOs\Model\ModelConfig;
+use Hitocean\CrudGenerator\Generators\FileConfigs\FactoryConfig;
+use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
 use Nette\PhpGenerator\Literal;
 use Nette\PhpGenerator\PhpFile;
 
 class FactoryGenerator extends FileGenerator
 {
-    public function create(ModelConfig $config): void
+    /**
+     * @param FactoryConfig $config
+     */
+    public function create($config): void
     {
         $file = new PhpFile();
 
         $factory_import = "Illuminate\Database\Eloquent\Factories\Factory";
-        $model_import = ModelGenerator::getImport($config);
 
-        $namespace = $file->addNamespace('Database\Factories')
-            ->addUse($model_import)
+        $namespace = $file->addNamespace($config->namespace())
+            ->addUse($config->model_import)
             ->addUse($factory_import);
 
-        $class = $namespace->addClass($config->modelName.'Factory')
+        $class = $namespace->addClass($config->className())
             ->setExtends($factory_import);
 
-        $class->addProperty('model', new Literal($config->modelName.'::class'))
+        $class->addProperty('model', new Literal($config->modelClassName().'::class'))
             ->setVisibility('protected');
 
         $class->addMethod('definition')
             ->addBody('return [')
             ->addBody(
-                collect($config->attributes)->map(fn ($attr) => "'{$attr->name}' => \$this->faker->{$attr->type->fakerFunction()},")->implode("\n")
+                $config->attributes->map(fn ($attr) => "'{$attr->name}' => {$attr->type->fakerFunction()},")->implode("\n")
             )
             ->addBody('];');
 
-        $this->createFile(database_path('factories/'.$config->modelName.'Factory.php'), $file);
+        $config->attributes->filter(fn($attr) => $attr->type->needsImport())->each(function ($attr) use ($namespace) {
+            $namespace->addUse($attr->type->importPath());
+        });
+
+        $this->createFile($config->filePath(), $file);
     }
 }

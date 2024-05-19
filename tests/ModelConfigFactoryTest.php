@@ -24,7 +24,7 @@ it('validates data structure', function () {
     $modelConfig = ModelConfigFactory::makeConfig($data);
 
     expect($modelConfig->modelName)->toBe('Client');
-    expect($modelConfig->folder)->toBe('Admin/Client');
+    expect($modelConfig->root_folder)->toBe('Admin/Client');
     expect($modelConfig->attributes->count())->toBe(4);
     expect($modelConfig->tableName)->toBe('clients');
     expect($modelConfig->has_abm)->toBeTrue();
@@ -52,7 +52,7 @@ it(' throws exception when attributes is not an array', function () {
     ModelConfigFactory::makeConfig($data);
 })->throws(\Exception::class, 'Attributes must be an array');
 
-it('throws exception when attribute name is missing', function ($attribute) {
+it('throws exception when attribute name or type is missing', function ($attribute) {
     $data = [
         'modelName' => 'Client',
         'folder' => 'Admin/Client',
