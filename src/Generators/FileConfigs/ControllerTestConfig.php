@@ -47,6 +47,4 @@ class ControllerTestConfig implements FileConfig
     {
         return $this->root_namespace.'\\Controllers';
     }
-
-
 }

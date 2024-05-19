@@ -36,6 +36,3 @@ class ResourceConfig implements FileConfig
         return $this->root_namespace.'\\Resources';
     }
 }
-{
-
-}

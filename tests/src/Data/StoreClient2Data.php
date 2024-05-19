@@ -7,5 +7,5 @@ use Src\Models\Product;
 
 class StoreClient2Data extends Data
 {
-	public Product $first_name;
+    public Product $first_name;
 }

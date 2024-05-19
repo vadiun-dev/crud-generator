@@ -36,7 +36,7 @@ class IntAttr implements ModelAttributeType
     public function dataType(ModelAttributeConfig $config): string
     {
         $base = 'int';
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
@@ -45,14 +45,15 @@ class IntAttr implements ModelAttributeType
 
     public function resourceType(ModelAttributeConfig $config): string
     {
-        $base =  'int';
+        $base = 'int';
 
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
         return $base;
     }
+
     public function needsImport(): bool
     {
         return false;

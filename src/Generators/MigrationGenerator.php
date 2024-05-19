@@ -3,7 +3,6 @@
 namespace Hitocean\CrudGenerator\Generators;
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
 use Nette\PhpGenerator\ClassType;
 
 class MigrationGenerator extends FileGenerator

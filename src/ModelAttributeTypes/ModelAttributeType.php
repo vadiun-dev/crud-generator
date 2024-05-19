@@ -15,10 +15,10 @@ interface ModelAttributeType
     public function migrationFunction(ModelAttributeConfig $config): string;
 
     public function dataType(ModelAttributeConfig $config): string;
+
     public function resourceType(ModelAttributeConfig $config): string;
 
     public function needsImport(): bool;
 
     public function importPath(): string;
-
 }

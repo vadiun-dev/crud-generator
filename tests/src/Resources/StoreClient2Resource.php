@@ -7,5 +7,5 @@ use Spatie\LaravelData\Data;
 
 class StoreClient2Resource extends Data
 {
-	public Carbon $first_name;
+    public Carbon $first_name;
 }

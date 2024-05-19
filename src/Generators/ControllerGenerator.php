@@ -3,15 +3,13 @@
 namespace Hitocean\CrudGenerator\Generators;
 
 use Hitocean\CrudGenerator\Generators\FileConfigs\ControllerConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
-use Illuminate\Support\Collection;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 
 class ControllerGenerator extends FileGenerator
 {
     /**
-     * @param ControllerConfig $config
+     * @param  ControllerConfig  $config
      */
     public function create($config): void
     {
@@ -99,6 +97,4 @@ class ControllerGenerator extends FileGenerator
             ->setType('int');
 
     }
-
-
 }

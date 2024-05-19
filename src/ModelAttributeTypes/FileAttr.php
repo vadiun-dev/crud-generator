@@ -10,7 +10,8 @@ class FileAttr implements ModelAttributeType
     public function __construct(
         public bool $isSingle,
         public string $collection_name
-    ){}
+    ) {
+    }
 
     public function needsModelCast(): bool
     {
@@ -36,7 +37,7 @@ class FileAttr implements ModelAttributeType
     {
         $base = 'UploadedFile';
 
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 

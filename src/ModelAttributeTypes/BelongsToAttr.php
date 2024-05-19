@@ -11,7 +11,8 @@ class BelongsToAttr implements ModelAttributeType
         private string $related_model_import,
         private string $related_model_table,
         private string $relation_name
-    ){}
+    ) {
+    }
 
     public function needsModelCast(): bool
     {
@@ -41,9 +42,9 @@ class BelongsToAttr implements ModelAttributeType
 
     public function dataType(ModelAttributeConfig $config): string
     {
-        $base =  'int';
+        $base = 'int';
 
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
@@ -52,9 +53,9 @@ class BelongsToAttr implements ModelAttributeType
 
     public function resourceType(ModelAttributeConfig $config): string
     {
-        $base =  'int';
+        $base = 'int';
 
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
@@ -80,6 +81,4 @@ class BelongsToAttr implements ModelAttributeType
     {
         return class_basename($this->related_model_import);
     }
-
-
 }

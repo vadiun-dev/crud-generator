@@ -6,7 +6,6 @@ use Illuminate\Filesystem\Filesystem;
 
 abstract class FileGenerator
 {
-
     abstract public function create($config): void;
 
     protected function createFile(string $path, string $file_content): void

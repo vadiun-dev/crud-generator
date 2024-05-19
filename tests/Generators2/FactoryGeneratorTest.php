@@ -2,7 +2,6 @@
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
 use Hitocean\CrudGenerator\Generators\FileConfigs\FactoryConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
 use Hitocean\CrudGenerator\ModelAttributeTypes\BelongsToAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
 use Nette\PhpGenerator\Literal;
@@ -50,7 +49,7 @@ it('has correct imports', function () {
 
 it('imports when relationship exists', function () {
     $config = new FactoryConfig(
-         collect([
+        collect([
             new ModelAttributeConfig(
                 'first_name',
                 new StringAttr(),
@@ -102,5 +101,3 @@ it('has correct methods', function () {
         ->toContain('];')
         ->and($this->classFile->getMethods()['definition']->getVisibility())->toBe('public');
 });
-
-
