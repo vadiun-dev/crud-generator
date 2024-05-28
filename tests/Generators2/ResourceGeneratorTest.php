@@ -65,9 +65,8 @@ it('has correct imports', function (ModelAttributeType $attribute, $import, $use
     $file = Nette\PhpGenerator\PhpFile::fromCode(file_get_contents(base_path('src/Resources/StoreClient2Resource.php')));
     $classFile = $file->getClasses()['Src\Resources\StoreClient2Resource'];
 
-
     if (is_null($import)) {
-        expect($classFile->getNamespace()->getUses())->toBe(['Data' => 'Spatie\LaravelData\Data', 'Client2' => 'Src\Models\Client2',]);
+        expect($classFile->getNamespace()->getUses())->toBe(['Data' => 'Spatie\LaravelData\Data', 'Client2' => 'Src\Models\Client2']);
 
     } else {
         expect($classFile->getNamespace()->getUses())->toBe([$import => $use,  'Data' => 'Spatie\LaravelData\Data', 'Client2' => 'Src\Models\Client2']);
@@ -80,7 +79,6 @@ it('has correct imports', function (ModelAttributeType $attribute, $import, $use
     [new FloatAttr(), null, null],
     [new BooleanAttr(), null, null],
 ]);
-
 
 it('has correct properties', function () {
     $promoted_parameters = $this->classFile->getMethods()['__construct'];

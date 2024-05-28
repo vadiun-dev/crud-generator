@@ -21,10 +21,12 @@ class BooleanAttr implements ModelAttributeType
     {
         return '$this->faker->boolean';
     }
+
     public function fakerTestFunction(): string
     {
         return $this->fakerFunction();
     }
+
     public function migrationFunction(ModelAttributeConfig $config): string
     {
         $base = "boolean('{$config->name}')";

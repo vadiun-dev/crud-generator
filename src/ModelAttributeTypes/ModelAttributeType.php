@@ -31,6 +31,4 @@ interface ModelAttributeType
     public function needsDataAttribute(): bool;
 
     public function dataAttribute(): string;
-
-
 }

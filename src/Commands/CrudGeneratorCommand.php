@@ -9,7 +9,6 @@ use Hitocean\CrudGenerator\Generators\ControllerGenerator;
 use Hitocean\CrudGenerator\Generators\ControllerTestGenerator;
 use Hitocean\CrudGenerator\Generators\DataGenerator;
 use Hitocean\CrudGenerator\Generators\FactoryGenerator;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ControllerConfig;
 use Hitocean\CrudGenerator\Generators\FileConfigs\ControllerTestConfig;
 use Hitocean\CrudGenerator\Generators\FileConfigs\DataConfig;
 use Hitocean\CrudGenerator\Generators\FileConfigs\FactoryConfig;
@@ -30,23 +29,22 @@ class CrudGeneratorCommand extends Command
 
     public function handle(): int
     {
-        $factory_creator     = new FactoryGenerator();
-        $model_creator       = new ModelGenerator();
+        $factory_creator = new FactoryGenerator();
+        $model_creator = new ModelGenerator();
         $migration_generator = new MigrationGenerator();
         $controller_creator = new ControllerGenerator();
-        $data_generator     = new DataGenerator();
+        $data_generator = new DataGenerator();
         $resource_generator = new ResourceGenerator();
-        $test_generator     = new ControllerTestGenerator();
+        $test_generator = new ControllerTestGenerator();
 
-
-        $model_configs      = [];
+        $model_configs = [];
         $controller_configs = [];
 
         $iterator = new DirectoryIterator(base_path('generators/models'));
         foreach ($iterator as $json_conf) {
-            if (!$json_conf->isDot()) {
-                $configData      = json_decode(
-                    file_get_contents($json_conf->getPath() . '/' . $json_conf->getFilename()),
+            if (! $json_conf->isDot()) {
+                $configData = json_decode(
+                    file_get_contents($json_conf->getPath().'/'.$json_conf->getFilename()),
                     true
                 );
                 $model_configs[] = ModelConfigFactory::makeConfig($configData);
@@ -55,9 +53,9 @@ class CrudGeneratorCommand extends Command
 
         $iterator = new DirectoryIterator(base_path('generators/controllers'));
         foreach ($iterator as $json_conf) {
-            if (!$json_conf->isDot()) {
-                $configData           = json_decode(
-                    file_get_contents($json_conf->getPath() . '/' . $json_conf->getFilename()),
+            if (! $json_conf->isDot()) {
+                $configData = json_decode(
+                    file_get_contents($json_conf->getPath().'/'.$json_conf->getFilename()),
                     true
                 );
                 $controller_configs[] = ControllerConfigFactory::makeConfig($configData);
@@ -69,16 +67,15 @@ class CrudGeneratorCommand extends Command
             $migration_generator->create($config);
             $model_creator->create($config);
             $factory_creator->create(
-                new FactoryConfig($config->attributes, $config->root_namespace . '\\Models\\' . $config->className())
+                new FactoryConfig($config->attributes, $config->root_namespace.'\\Models\\'.$config->className())
             );
         }
 
         foreach ($controller_configs as $config) {
 
-
             $data_generator->create(
                 new DataConfig(
-                    'Store' . $config->modelClassName(),
+                    'Store'.$config->modelClassName(),
                     $config->root_folder,
                     $config->root_namespace,
                     $config->model_attributes
@@ -88,7 +85,7 @@ class CrudGeneratorCommand extends Command
             $route_parameter = Str::lower(Str::singular($config->modelClassName()));
             $data_generator->create(
                 new DataConfig(
-                    'Update' . $config->modelClassName(),
+                    'Update'.$config->modelClassName(),
                     $config->root_folder,
                     $config->root_namespace,
                     $config->model_attributes->values()->add(new ModelAttributeConfig('id', new IdentifierAttr($route_parameter), false))
@@ -106,7 +103,7 @@ class CrudGeneratorCommand extends Command
             );
             $resource_generator->create(
                 new ResourceConfig(
-                    'Detailed' . $config->modelClassName(),
+                    'Detailed'.$config->modelClassName(),
                     $config->root_folder,
                     $config->root_namespace,
                     $config->model_attributes->values()->add(new ModelAttributeConfig('id', new IdentifierAttr('banner'), false)),
@@ -118,7 +115,7 @@ class CrudGeneratorCommand extends Command
 
             $test_generator->create(
                 new ControllerTestConfig(
-                    $config->root_namespace . '\\Controllers\\' . $config->className(),
+                    $config->root_namespace.'\\Controllers\\'.$config->className(),
                     $config->model_import,
                     $config->model_attributes->values()->add(new ModelAttributeConfig('id', new IdentifierAttr('banner'), false)),
                     'tests',
@@ -127,7 +124,6 @@ class CrudGeneratorCommand extends Command
                 )
             );
         }
-
 
         $this->info('generado modelo');
 

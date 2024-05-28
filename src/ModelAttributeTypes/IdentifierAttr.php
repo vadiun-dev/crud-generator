@@ -4,14 +4,14 @@ namespace Hitocean\CrudGenerator\ModelAttributeTypes;
 
 use Exception;
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
-use Spatie\LaravelData\Attributes\FromRouteParameter;
 
 class IdentifierAttr implements ModelAttributeType
 {
-
     public function __construct(
         private string $route_parameter
-    ){}
+    ) {
+    }
+
     public function needsModelCast(): bool
     {
         return false;
@@ -56,7 +56,7 @@ class IdentifierAttr implements ModelAttributeType
     public function dataType(ModelAttributeConfig $config): string
     {
         $base = 'int';
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
@@ -80,14 +80,15 @@ class IdentifierAttr implements ModelAttributeType
 
     public function resourceType(ModelAttributeConfig $config): string
     {
-        $base =  'int';
+        $base = 'int';
 
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
         return $base;
     }
+
     public function needsImport(): bool
     {
         return false;

@@ -25,8 +25,7 @@ beforeEach(function () {
 
     $this->generator->create($this->simpleModelConfig);
 
-
-    $file  = Nette\PhpGenerator\PhpFile::fromCode(
+    $file = Nette\PhpGenerator\PhpFile::fromCode(
         file_get_contents(base_path('tests/Controllers/ClientControllerTest.php'))
     );
 
