@@ -36,6 +36,3 @@ class DataConfig implements FileConfig
         return $this->root_namespace.'\\Data';
     }
 }
-{
-
-}

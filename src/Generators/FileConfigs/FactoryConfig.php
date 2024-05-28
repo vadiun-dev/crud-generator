@@ -39,6 +39,3 @@ class FactoryConfig implements FileConfig
         return 'Database\\Factories';
     }
 }
-{
-
-}

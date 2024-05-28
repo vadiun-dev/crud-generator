@@ -2,9 +2,8 @@
 
 use Hitocean\CrudGenerator\ModelAttributeTypes\BelongsToAttr;
 
-beforeEach(function ()
-{
-    $this->attr = new BelongsToAttr('Src\Models\Client',  'clients', 'client');
+beforeEach(function () {
+    $this->attr = new BelongsToAttr('Src\Models\Client', 'clients', 'client');
 });
 
 it('needs model cast', function () {
@@ -50,7 +49,6 @@ it('returns related model class', function () {
     expect($this->attr->relatedModelClass())->toBe('Client');
 });
 
-
 it('returns relation name', function () {
     expect($this->attr->relationName())->toBe('client');
 });
@@ -68,3 +66,4 @@ it('returns resource type', function () {
     $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('client_id', $this->attr, false);
     expect($this->attr->resourceType($config))->toBe('int');
 });
+

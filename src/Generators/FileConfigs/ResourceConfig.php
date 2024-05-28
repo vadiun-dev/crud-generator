@@ -42,6 +42,3 @@ class ResourceConfig implements FileConfig
         return $this->model_import;
     }
 }
-{
-
-}

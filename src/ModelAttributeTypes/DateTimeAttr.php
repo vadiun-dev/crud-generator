@@ -48,9 +48,9 @@ class DateTimeAttr implements ModelAttributeType
 
     public function dataType(ModelAttributeConfig $config): string
     {
-        $base =  'Carbon';
+        $base = 'Carbon';
 
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
@@ -59,14 +59,17 @@ class DateTimeAttr implements ModelAttributeType
 
     public function resourceType(ModelAttributeConfig $config): string
     {
+
         $base =  'string';
 
-        if($config->isNullable){
+
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
         return $base;
     }
+
     public function needsImport(): bool
     {
         return true;

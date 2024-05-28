@@ -41,6 +41,4 @@ class ModelConfig implements FileConfig
     {
         return $this->namespace().'\\'.$this->modelName;
     }
-
-
 }

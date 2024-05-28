@@ -10,7 +10,7 @@ use Nette\PhpGenerator\PhpFile;
 class ModelGenerator extends FileGenerator
 {
     /**
-     * @param ModelConfig $config
+     * @param  ModelConfig  $config
      */
     public function create($config): void
     {
@@ -21,19 +21,19 @@ class ModelGenerator extends FileGenerator
         $belongs_to_import = "Illuminate\Database\Eloquent\Relations\BelongsTo";
 
         $namespace = $file->addNamespace($config->namespace())
-                          ->addUse($model_import)
-                          ->addUse($has_factory_import);
+            ->addUse($model_import)
+            ->addUse($has_factory_import);
 
         $class = $namespace->addClass($config->modelName)
-                           ->setExtends($model_import);
+            ->setExtends($model_import);
 
         $class->addTrait($has_factory_import);
 
         $class->addProperty('table', $config->tableName)
-              ->setVisibility('protected');
+            ->setVisibility('protected');
 
         $class->addProperty('fillable', $config->attributes->map(fn ($attr) => $attr->name)->toArray())
-              ->setVisibility('protected');
+            ->setVisibility('protected');
 
         $class->addProperty(
             'casts',
@@ -41,18 +41,17 @@ class ModelGenerator extends FileGenerator
                 fn ($attr) => [$attr->name => $attr->type->modelCast()]
             )->toArray()
         )
-              ->setVisibility('protected');
+            ->setVisibility('protected');
 
         $config->attributes->filter(fn (ModelAttributeConfig $attr) => $attr->type instanceof BelongsToAttr)
-                           ->each(function (ModelAttributeConfig $attr) use ($namespace, $class, $belongs_to_import)
-                           {
-                               $namespace->addUse($attr->type->importPath())
-                                         ->addUse($belongs_to_import);
+            ->each(function (ModelAttributeConfig $attr) use ($namespace, $class, $belongs_to_import) {
+                $namespace->addUse($attr->type->importPath())
+                    ->addUse($belongs_to_import);
 
-                               $class->addMethod($attr->type->relationName())
-                                     ->setReturnType($belongs_to_import)
-                                     ->setBody("return \$this->belongsTo({$attr->type->relatedModelClass()}::class);");
-                           });
+                $class->addMethod($attr->type->relationName())
+                    ->setReturnType($belongs_to_import)
+                    ->setBody("return \$this->belongsTo({$attr->type->relatedModelClass()}::class);");
+            });
 
         $this->createFile($config->filePath(), $file);
 
@@ -60,11 +59,11 @@ class ModelGenerator extends FileGenerator
 
     public function filePath(ModelConfig $config): string
     {
-        return base_path($config->folder . '/Models/' . $config->modelName . '.php');
+        return base_path($config->folder.'/Models/'.$config->modelName.'.php');
     }
 
     public static function getImport(ModelConfig $config): string
     {
-        return 'Src\\' . $config->folder . '\\Models\\' . $config->modelName;
+        return 'Src\\'.$config->folder.'\\Models\\'.$config->modelName;
     }
 }

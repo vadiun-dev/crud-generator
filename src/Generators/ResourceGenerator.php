@@ -3,18 +3,13 @@
 namespace Hitocean\CrudGenerator\Generators;
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ControllerConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\DataConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
 use Hitocean\CrudGenerator\Generators\FileConfigs\ResourceConfig;
-use Hitocean\CrudGenerator\ModelAttributeTypes\ModelAttributeType;
-use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 
 class ResourceGenerator extends FileGenerator
 {
     /**
-     * @param ResourceConfig $config
+     * @param  ResourceConfig  $config
      */
     public function create($config): void
     {
@@ -26,7 +21,7 @@ class ResourceGenerator extends FileGenerator
             ->addUse($config->model_import);
 
         $class = $namespace->addClass($config->className())
-                           ->setExtends($spatie_import);
+            ->setExtends($spatie_import);
 
 
         $contrusct = $class->addMethod('__construct');
@@ -35,6 +30,7 @@ class ResourceGenerator extends FileGenerator
 
             $property = $contrusct->addPromotedParameter($attr->name)->setVisibility('public');
             if($attr->type->needsImport()){
+
                 $namespace->addUse($attr->type->importPath());
             }
                 $property->setType($attr->type->resourceType($attr));
@@ -58,6 +54,4 @@ class ResourceGenerator extends FileGenerator
         $this->createFile($config->filePath(), $file);
 
     }
-
-
 }

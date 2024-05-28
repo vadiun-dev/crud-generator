@@ -65,11 +65,12 @@ class ModelConfigFactory
         $requiredKeys = ['modelName', 'root_folder', 'root_namespace', 'attributes', 'tableName', 'makeCrud'];
         $missingKeys  = collect($requiredKeys)->diff(array_keys($data));
 
+
         if ($missingKeys->isNotEmpty()) {
-            throw new \Exception('Missing keys: ' . $missingKeys->implode(', '));
+            throw new \Exception('Missing keys: '.$missingKeys->implode(', '));
         }
 
-        if (!is_array($data['attributes'])) {
+        if (! is_array($data['attributes'])) {
             throw new \Exception('Attributes must be an array');
         }
 
@@ -77,7 +78,7 @@ class ModelConfigFactory
         $missingAttributeKeys = $attributes->map(
             fn ($attribute) => collect(['name', 'type'])->diff(array_keys($attribute))
         )
-                                           ->filter(fn ($missingKeys) => $missingKeys->isNotEmpty());
+            ->filter(fn ($missingKeys) => $missingKeys->isNotEmpty());
 
         if ($missingAttributeKeys->isNotEmpty()) {
             throw new \Exception('Every attribute must have a name and a type');

@@ -11,7 +11,7 @@ use Nette\PhpGenerator\PhpFile;
 class ControllerTestGenerator extends FileGenerator
 {
     /**
-     * @param ControllerTestConfig $config
+     * @param  ControllerTestConfig  $config
      */
     public function create($config): void
     {
@@ -41,7 +41,7 @@ class ControllerTestGenerator extends FileGenerator
         $method = $class->addMethod('it_store_a_new_model')
                         ->addComment(' @test')
             ->setVisibility('public')
-            ->addBody("\$data = [");
+            ->addBody('$data = [');
 
         $config->model_attributes->filter(fn(ModelAttributeConfig $attr) => !$attr->type instanceof IdentifierAttr)
             ->each(fn(ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => {$attr->type->fakerTestFunction()},"));
@@ -53,6 +53,7 @@ class ControllerTestGenerator extends FileGenerator
 
         $config->model_attributes->filter(fn(ModelAttributeConfig $attr) => !$attr->type instanceof IdentifierAttr)
                                  ->each(fn(ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => \$data['{$attr->name}'],"));
+
 
 
         $method->addBody(']);')
@@ -68,20 +69,21 @@ class ControllerTestGenerator extends FileGenerator
                         ->addBody("\$model = {$config->modelClassName()}::factory()->create();\n")
                         ->addBody("\$data = [");
 
+
         $config->model_attributes->filter(fn(ModelAttributeConfig $attr) => !$attr->type instanceof IdentifierAttr)
                                  ->each(fn(ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => {$attr->type->fakerTestFunction()},"));
 
 
         $method->addBody('];')
-               ->addBody("\$this->put(action([{$config->controllerClassName()}::class, 'update'], \$model->id), \$data)->assertOk();")
-               ->addBody("\$this->assertDatabaseHas({$config->modelClassName()}::class, [")
-                ->addBody("'id' => \$model->id,");
+            ->addBody("\$this->put(action([{$config->controllerClassName()}::class, 'update'], \$model->id), \$data)->assertOk();")
+            ->addBody("\$this->assertDatabaseHas({$config->modelClassName()}::class, [")
+            ->addBody("'id' => \$model->id,");
 
         $config->model_attributes->filter(fn(ModelAttributeConfig $attr) => !$attr->type instanceof IdentifierAttr)
                                  ->each(fn(ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => \$data['{$attr->name}'],"));
 
         $method->addBody(']);')
-               ->setReturnType('void');
+            ->setReturnType('void');
 
     }
 
@@ -95,6 +97,7 @@ class ControllerTestGenerator extends FileGenerator
                         ->addBody("\$this->assertDatabaseMissing({$config->modelClassName()}::class, ['id' => \$model->id]);")
                         ->setReturnType('void');
 
+
     }
 
     public function indexMethod(ControllerTestConfig $config, ClassType $class): void
@@ -107,12 +110,13 @@ class ControllerTestGenerator extends FileGenerator
                         ->addBody("->assertExactJson([")
                         ->addBody("[");
 
+
         foreach ($config->model_attributes as $attr) {
             $method->addBody("'{$attr->name}' => \$models[0]->{$attr->type->resourceMapProperty($attr)},");
         }
 
         $method->addBody(']]);')
-               ->setReturnType('void');
+            ->setReturnType('void');
 
     }
 
@@ -125,13 +129,13 @@ class ControllerTestGenerator extends FileGenerator
                         ->addBody("\$this->get(action([{$config->controllerClassName()}::class, 'show'], \$model->id))->assertOk()")
                         ->addBody("->assertExactJson([");
 
+
         foreach ($config->model_attributes as $attr) {
             $method->addBody("'{$attr->name}' => \$model->{$attr->type->resourceMapProperty($attr)},");
         }
 
         $method->addBody(']);')
-               ->setReturnType('void');
+            ->setReturnType('void');
 
     }
-
 }

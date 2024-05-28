@@ -49,8 +49,8 @@ class StringAttr implements ModelAttributeType
 
     public function dataType(ModelAttributeConfig $config): string
     {
-        $base =  'string';
-        if($config->isNullable){
+        $base = 'string';
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
@@ -61,7 +61,8 @@ class StringAttr implements ModelAttributeType
     {
         $base =  'string';
 
-        if($config->isNullable){
+
+        if ($config->isNullable) {
             return '?'.$base;
         }
 

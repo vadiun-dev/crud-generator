@@ -51,7 +51,7 @@ class FloatAttr implements ModelAttributeType
     public function dataType(ModelAttributeConfig $config): string
     {
         $base = 'float';
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
@@ -60,14 +60,15 @@ class FloatAttr implements ModelAttributeType
 
     public function resourceType(ModelAttributeConfig $config): string
     {
-        $base =  'float';
+        $base = 'float';
 
-        if($config->isNullable){
+        if ($config->isNullable) {
             return '?'.$base;
         }
 
         return $base;
     }
+
     public function needsImport(): bool
     {
         return false;

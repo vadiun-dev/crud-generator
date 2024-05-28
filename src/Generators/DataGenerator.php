@@ -3,17 +3,13 @@
 namespace Hitocean\CrudGenerator\Generators;
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ControllerConfig;
 use Hitocean\CrudGenerator\Generators\FileConfigs\DataConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
-use Hitocean\CrudGenerator\ModelAttributeTypes\ModelAttributeType;
-use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 
 class DataGenerator extends FileGenerator
 {
     /**
-     * @param DataConfig $config
+     * @param  DataConfig  $config
      */
     public function create($config): void
     {
@@ -24,13 +20,13 @@ class DataGenerator extends FileGenerator
             ->addUse($spatie_import);
 
         $class = $namespace->addClass($config->className())
-                           ->setExtends($spatie_import);
+            ->setExtends($spatie_import);
 
         /** @var ModelAttributeConfig $attr */
         foreach ($config->attributes as $attr) {
 
             $property = $class->addProperty($attr->name)->setVisibility('public');
-            if($attr->type->needsImport()){
+            if ($attr->type->needsImport()) {
                 $namespace->addUse($attr->type->importPath());
                 $property->setType($attr->type->importPath());
             } else {
@@ -45,6 +41,4 @@ class DataGenerator extends FileGenerator
         $this->createFile($config->filePath(), $file);
 
     }
-
-
 }

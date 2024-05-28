@@ -3,14 +3,13 @@
 namespace Hitocean\CrudGenerator\Generators;
 
 use Hitocean\CrudGenerator\Generators\FileConfigs\FactoryConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
 use Nette\PhpGenerator\Literal;
 use Nette\PhpGenerator\PhpFile;
 
 class FactoryGenerator extends FileGenerator
 {
     /**
-     * @param FactoryConfig $config
+     * @param  FactoryConfig  $config
      */
     public function create($config): void
     {
@@ -35,7 +34,7 @@ class FactoryGenerator extends FileGenerator
             )
             ->addBody('];');
 
-        $config->attributes->filter(fn($attr) => $attr->type->needsImport())->each(function ($attr) use ($namespace) {
+        $config->attributes->filter(fn ($attr) => $attr->type->needsImport())->each(function ($attr) use ($namespace) {
             $namespace->addUse($attr->type->importPath());
         });
 
