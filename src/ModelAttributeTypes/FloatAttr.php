@@ -22,6 +22,21 @@ class FloatAttr implements ModelAttributeType
         return '$this->faker->randomFloat(2, 0, 100)';
     }
 
+    public function fakerTestFunction(): string
+    {
+        return $this->fakerFunction();
+    }
+
+    public function needsResourceMap(): bool
+    {
+        return false;
+    }
+
+    public function resourceMapProperty(ModelAttributeConfig $config): string
+    {
+        return $config->name;
+    }
+
     public function migrationFunction(ModelAttributeConfig $config): string
     {
         $base = "float('{$config->name}')";
@@ -61,5 +76,15 @@ class FloatAttr implements ModelAttributeType
     public function importPath(): string
     {
         throw new \Exception('FloatAttr does not need an import path.');
+    }
+
+    public function needsDataAttribute(): bool
+    {
+        return false;
+    }
+
+    public function dataAttribute(): string
+    {
+        throw new Exception('FloatAttr does not has a data Attribute.');
     }
 }

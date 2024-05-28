@@ -12,6 +12,8 @@ interface ModelAttributeType
 
     public function fakerFunction(): string;
 
+    public function fakerTestFunction(): string;
+
     public function migrationFunction(ModelAttributeConfig $config): string;
 
     public function dataType(ModelAttributeConfig $config): string;
@@ -20,5 +22,13 @@ interface ModelAttributeType
     public function needsImport(): bool;
 
     public function importPath(): string;
+
+    public function resourceMapProperty(ModelAttributeConfig $config): string;
+
+    public function needsResourceMap(): bool;
+
+    public function needsDataAttribute(): bool;
+
+    public function dataAttribute(): string;
 
 }

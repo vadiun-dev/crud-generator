@@ -10,7 +10,7 @@ beforeEach(function () {
 
     $this->generator = new MigrationGenerator();
     $this->simpleModelConfig = new ModelConfig(
-        'Client', 'Client', collect([
+        'Client', 'Client', 'Client', collect([
             new ModelAttributeConfig(
                 'first_name',
                 new StringAttr(),

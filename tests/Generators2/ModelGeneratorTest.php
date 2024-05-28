@@ -8,7 +8,7 @@ use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
 beforeEach(function () {
     $this->generator = new ModelGenerator();
     $this->simpleModelConfig = new ModelConfig(
-        'Client', 'Client', collect([
+        'Client', 'Client', 'Client', collect([
             new ModelAttributeConfig(
                 'first_name',
                 new StringAttr(),

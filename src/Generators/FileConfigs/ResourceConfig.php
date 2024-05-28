@@ -13,6 +13,7 @@ class ResourceConfig implements FileConfig
         public string $root_namespace,
         /** @var Collection<ModelAttributeConfig> */
         public Collection $attributes,
+        public string $model_import
     ) {
     }
 
@@ -34,6 +35,11 @@ class ResourceConfig implements FileConfig
     public function namespace(): string
     {
         return $this->root_namespace.'\\Resources';
+    }
+
+    public function modelClassName(): string
+    {
+        return $this->model_import;
     }
 }
 {

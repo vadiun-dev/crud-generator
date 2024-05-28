@@ -26,7 +26,19 @@ class FileAttr implements ModelAttributeType
     {
         throw new Exception('It does not have a function.');
     }
+    public function needsResourceMap(): bool
+    {
+        return false;
+    }
 
+    public function resourceMapProperty(ModelAttributeConfig $config): string
+    {
+        return $config->name;
+    }
+    public function fakerTestFunction(): string
+    {
+        return $this->fakerFunction();
+    }
     public function migrationFunction(ModelAttributeConfig $config): string
     {
         throw new Exception('File do not use migrations.');
@@ -58,8 +70,13 @@ class FileAttr implements ModelAttributeType
         return $this->related_model_import;
     }
 
-    public function belongsToTable(): bool
+    public function needsDataAttribute(): bool
     {
         return false;
+    }
+
+    public function dataAttribute(): string
+    {
+        throw new Exception('FileAttr does not has a data Attribute.');
     }
 }

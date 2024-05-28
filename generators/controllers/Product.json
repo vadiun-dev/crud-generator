@@ -1,0 +1,32 @@
+{
+    "controller_name": "Cafetera",
+    "root_folder": "Cafetera",
+    "root_namespace": "Cafetera",
+    "model_import": "cafeteras",
+    "model_attributes": [
+        {
+            "name": "category_id",
+            "type": "int"
+        },
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "description",
+            "type": "string"
+        },
+        {
+            "name": "price",
+            "type": "float"
+        },
+        {
+            "name": "code",
+            "type": "string"
+        },
+        {
+            "name": "weight",
+            "type": "float"
+        }
+    ]
+}

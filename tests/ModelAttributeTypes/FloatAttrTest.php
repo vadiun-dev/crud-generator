@@ -26,3 +26,29 @@ it('returns migration function', function () {
     $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, true);
     expect($booleanAttr->migrationFunction($config))->toBe("float('name')->nullable()");
 });
+
+it('needs resource type', function () {
+    $booleanAttr = new FloatAttr();
+    expect($booleanAttr->needsResourceMap())->toBeFalse();
+});
+
+
+it('resource map property', function () {
+    $booleanAttr = new FloatAttr();
+
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, false);
+    expect($booleanAttr->resourceMapProperty($config))->toBe('name');
+
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, true);
+    expect($booleanAttr->resourceMapProperty($config))->toBe('name');
+});
+
+it('returns resource type', function () {
+    $booleanAttr = new FloatAttr();
+
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, false);
+    expect($booleanAttr->resourceType($config))->toBe('float');
+
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, true);
+    expect($booleanAttr->resourceType($config))->toBe('?float');
+});

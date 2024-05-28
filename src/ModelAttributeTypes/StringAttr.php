@@ -21,6 +21,11 @@ class StringAttr implements ModelAttributeType
         return '$this->faker->word';
     }
 
+    public function fakerTestFunction(): string
+    {
+        return $this->fakerFunction();
+    }
+
     public function migrationFunction(ModelAttributeConfig $config): string
     {
         $base = "string('{$config->name}')";
@@ -30,6 +35,16 @@ class StringAttr implements ModelAttributeType
         }
 
         return $base;
+    }
+
+    public function needsResourceMap(): bool
+    {
+        return false;
+    }
+
+    public function resourceMapProperty(ModelAttributeConfig $config): string
+    {
+        return $config->name;
     }
 
     public function dataType(ModelAttributeConfig $config): string
@@ -44,7 +59,7 @@ class StringAttr implements ModelAttributeType
 
     public function resourceType(ModelAttributeConfig $config): string
     {
-        $base =  'int';
+        $base =  'string';
 
         if($config->isNullable){
             return '?'.$base;
@@ -61,5 +76,15 @@ class StringAttr implements ModelAttributeType
     public function importPath(): string
     {
         throw new \Exception('StringAttr does not need an import path.');
+    }
+
+    public function needsDataAttribute(): bool
+    {
+        return false;
+    }
+
+    public function dataAttribute(): string
+    {
+        throw new Exception('StringAttr does not has a data Attribute.');
     }
 }

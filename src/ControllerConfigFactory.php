@@ -3,6 +3,7 @@
 namespace Hitocean\CrudGenerator;
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
+use Hitocean\CrudGenerator\Generators\FileConfigs\ControllerConfig;
 use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
 use Hitocean\CrudGenerator\ModelAttributeTypes\BelongsToAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\BooleanAttr;
@@ -11,17 +12,16 @@ use Hitocean\CrudGenerator\ModelAttributeTypes\FloatAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\IntAttr;
 use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
 
-class ModelConfigFactory
+class ControllerConfigFactory
 {
-    public static function makeConfig(array $data): ModelConfig
+    public static function makeConfig(array $data): ControllerConfig
     {
         static::validateDataStructure($data);
 
-        return new ModelConfig(
-            $data['modelName'],
-            $data['root_folder'],
-            $data['root_namespace'],
-            collect($data['attributes'])->map(
+        return new ControllerConfig(
+            $data['controller_name'],
+            $data['model_import'],
+            collect($data['model_attributes'])->map(
                 fn ($attribute) => new ModelAttributeConfig(
                     $attribute['name'],
                     static::mapAttrType(
@@ -33,8 +33,9 @@ class ModelConfigFactory
                     static::isOptional($attribute['type'])
                 )
             ),
-            $data['tableName'],
-            $data['makeCrud']
+            $data['root_folder'],
+            $data['root_namespace'],
+            collect()
         );
     }
 
@@ -62,18 +63,18 @@ class ModelConfigFactory
 
     public static function validateDataStructure(array $data): void
     {
-        $requiredKeys = ['modelName', 'root_folder', 'root_namespace', 'attributes', 'tableName', 'makeCrud'];
+        $requiredKeys = ['controller_name', 'root_folder', 'model_attributes', 'root_namespace', 'model_import'];
         $missingKeys  = collect($requiredKeys)->diff(array_keys($data));
 
         if ($missingKeys->isNotEmpty()) {
             throw new \Exception('Missing keys: ' . $missingKeys->implode(', '));
         }
 
-        if (!is_array($data['attributes'])) {
+        if (!is_array($data['model_attributes'])) {
             throw new \Exception('Attributes must be an array');
         }
 
-        $attributes = collect($data['attributes']);
+        $attributes = collect($data['model_attributes']);
         $missingAttributeKeys = $attributes->map(
             fn ($attribute) => collect(['name', 'type'])->diff(array_keys($attribute))
         )

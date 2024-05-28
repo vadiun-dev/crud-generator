@@ -55,3 +55,16 @@ it('returns relation name', function () {
     expect($this->attr->relationName())->toBe('client');
 });
 
+it('needs resource map', function () {
+    expect($this->attr->needsResourceMap())->toBeFalse();
+});
+
+it('returns resource map property', function () {
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('client_id', $this->attr, false);
+    expect($this->attr->resourceMapProperty($config))->toBe('client_id');
+});
+
+it('returns resource type', function () {
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('client_id', $this->attr, false);
+    expect($this->attr->resourceType($config))->toBe('int');
+});

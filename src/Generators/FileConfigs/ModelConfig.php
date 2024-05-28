@@ -9,6 +9,7 @@ class ModelConfig implements FileConfig
     public function __construct(
         public string $modelName,
         public string $root_folder,
+        public string $root_namespace,
         /** @var Collection<ModelAttributeConfig> */
         public Collection $attributes,
         public string $tableName,
@@ -33,7 +34,7 @@ class ModelConfig implements FileConfig
 
     public function namespace(): string
     {
-        return $this->root_folder.'\\Models';
+        return $this->root_namespace.'\\Models';
     }
 
     public function import(): string

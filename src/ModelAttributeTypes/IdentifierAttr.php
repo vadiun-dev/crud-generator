@@ -4,9 +4,14 @@ namespace Hitocean\CrudGenerator\ModelAttributeTypes;
 
 use Exception;
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
+use Spatie\LaravelData\Attributes\FromRouteParameter;
 
-class IntAttr implements ModelAttributeType
+class IdentifierAttr implements ModelAttributeType
 {
+
+    public function __construct(
+        private string $route_parameter
+    ){}
     public function needsModelCast(): bool
     {
         return false;
@@ -14,7 +19,7 @@ class IntAttr implements ModelAttributeType
 
     public function modelCast(): string
     {
-        throw new Exception('IntAttr does not need a model cast.');
+        throw new Exception('IdentifierAttr does not need a model cast.');
     }
 
     public function fakerFunction(): string
@@ -58,6 +63,21 @@ class IntAttr implements ModelAttributeType
         return $base;
     }
 
+    public function needsDataAttribute(): bool
+    {
+        return true;
+    }
+
+    public function dataAttribute(): string
+    {
+        return "Spatie\LaravelData\Attributes\FromRouteParameter";
+    }
+
+    public function dataAttributeParam(): string
+    {
+        return $this->route_parameter;
+    }
+
     public function resourceType(ModelAttributeConfig $config): string
     {
         $base =  'int';
@@ -76,15 +96,5 @@ class IntAttr implements ModelAttributeType
     public function importPath(): string
     {
         throw new \Exception('IntAttr does not need an import path.');
-    }
-
-    public function needsDataAttribute(): bool
-    {
-        return false;
-    }
-
-    public function dataAttribute(): string
-    {
-        throw new Exception('IntAttr does not has a data Attribute.');
     }
 }

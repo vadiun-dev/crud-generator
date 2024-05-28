@@ -22,21 +22,37 @@ class ResourceGenerator extends FileGenerator
 
         $spatie_import = 'Spatie\LaravelData\Data';
         $namespace = $file->addNamespace($config->namespace())
-            ->addUse($spatie_import);
+            ->addUse($spatie_import)
+            ->addUse($config->model_import);
 
         $class = $namespace->addClass($config->className())
                            ->setExtends($spatie_import);
 
+
+        $contrusct = $class->addMethod('__construct');
         /** @var ModelAttributeConfig $attr */
         foreach ($config->attributes as $attr) {
 
-            $property = $class->addProperty($attr->name)->setVisibility('public');
+            $property = $contrusct->addPromotedParameter($attr->name)->setVisibility('public');
             if($attr->type->needsImport()){
                 $namespace->addUse($attr->type->importPath());
-                $property->setType($attr->type->importPath());
-            } else {
-                $property->setType($attr->type->dataType($attr));
             }
+                $property->setType($attr->type->resourceType($attr));
+        }
+
+        if($config->attributes->filter(fn($attr) => $attr->type->needsResourceMap()))
+        {
+            $method = $class->addMethod('fromModel')
+                            ->setReturnType('self')
+                            ->setStatic()
+                            ->setVisibility('public');
+
+            $method->addParameter('model')->setType($config->model_import);
+
+            $method->addBody('return new self(')
+                ->addBody($config->attributes->map(fn(ModelAttributeConfig $attr) => "\$model->{$attr->type->resourceMapProperty($attr)},")->join("\n"))
+                ->addBody(');')
+            ;
         }
 
         $this->createFile($config->filePath(), $file);

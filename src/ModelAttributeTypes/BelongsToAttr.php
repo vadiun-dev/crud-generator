@@ -28,6 +28,21 @@ class BelongsToAttr implements ModelAttributeType
         return "{$this->relatedModelClass()}::factory()->create()->id";
     }
 
+    public function fakerTestFunction(): string
+    {
+        return $this->fakerFunction();
+    }
+
+    public function needsResourceMap(): bool
+    {
+        return false;
+    }
+
+    public function resourceMapProperty(ModelAttributeConfig $config): string
+    {
+        return $config->name;
+    }
+
     public function migrationFunction(ModelAttributeConfig $config): string
     {
         $base = "foreignId('{$config->name}')->constrained('{$this->related_model_table}')";
@@ -38,6 +53,17 @@ class BelongsToAttr implements ModelAttributeType
 
         return $base;
     }
+
+    public function needsDataAttribute(): bool
+    {
+        return false;
+    }
+
+    public function dataAttribute(): string
+    {
+        throw new Exception('BelongsToAttr does not has a data Attribute.');
+    }
+
 
     public function dataType(ModelAttributeConfig $config): string
     {

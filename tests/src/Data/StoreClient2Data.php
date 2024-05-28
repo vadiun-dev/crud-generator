@@ -2,10 +2,10 @@
 
 namespace Src\Data;
 
+use Carbon\Carbon;
 use Spatie\LaravelData\Data;
-use Src\Models\Product;
 
 class StoreClient2Data extends Data
 {
-	public Product $first_name;
+	public Carbon $first_name;
 }

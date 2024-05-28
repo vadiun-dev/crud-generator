@@ -4,6 +4,7 @@ namespace Hitocean\CrudGenerator\Generators;
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
 use Hitocean\CrudGenerator\Generators\FileConfigs\ControllerTestConfig;
+use Hitocean\CrudGenerator\ModelAttributeTypes\IdentifierAttr;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 
@@ -38,22 +39,21 @@ class ControllerTestGenerator extends FileGenerator
     public function storeMethod(ControllerTestConfig $config, ClassType $class): void
     {
         $method = $class->addMethod('it_store_a_new_model')
+                        ->addComment(' @test')
             ->setVisibility('public')
             ->addBody("\$data = [");
 
-        /** @var ModelAttributeConfig $attr */
-        foreach ($config->model_attributes as $attr) {
-            $method->addBody("'{$attr->name}' => {$attr->type->fakerFunction()},");
-        }
+        $config->model_attributes->filter(fn(ModelAttributeConfig $attr) => !$attr->type instanceof IdentifierAttr)
+            ->each(fn(ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => {$attr->type->fakerTestFunction()},"));
+
 
         $method->addBody('];')
             ->addBody("\$this->post(action([{$config->controllerClassName()}::class, 'store']), \$data)->assertOk();")
             ->addBody("\$this->assertDatabaseHas({$config->modelClassName()}::class, [");
 
-          /** @var ModelAttributeConfig $attr */
-        foreach ($config->model_attributes as $attr) {
-            $method->addBody("'{$attr->name}' => \$data['{$attr->name}'],");
-        }
+        $config->model_attributes->filter(fn(ModelAttributeConfig $attr) => !$attr->type instanceof IdentifierAttr)
+                                 ->each(fn(ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => \$data['{$attr->name}'],"));
+
 
         $method->addBody(']);')
             ->setReturnType('void');
@@ -63,24 +63,22 @@ class ControllerTestGenerator extends FileGenerator
     public function updateMethod(ControllerTestConfig $config, ClassType $class): void
     {
         $method = $class->addMethod('it_updates_a_model')
+            ->addComment(' @test')
                         ->setVisibility('public')
                         ->addBody("\$model = {$config->modelClassName()}::factory()->create();\n")
                         ->addBody("\$data = [");
 
-        /** @var ModelAttributeConfig $attr */
-        foreach ($config->model_attributes as $attr) {
-            $method->addBody("'{$attr->name}' => {$attr->type->fakerFunction()},");
-        }
+        $config->model_attributes->filter(fn(ModelAttributeConfig $attr) => !$attr->type instanceof IdentifierAttr)
+                                 ->each(fn(ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => {$attr->type->fakerTestFunction()},"));
+
 
         $method->addBody('];')
                ->addBody("\$this->put(action([{$config->controllerClassName()}::class, 'update'], \$model->id), \$data)->assertOk();")
                ->addBody("\$this->assertDatabaseHas({$config->modelClassName()}::class, [")
                 ->addBody("'id' => \$model->id,");
 
-        /** @var ModelAttributeConfig $attr */
-        foreach ($config->model_attributes as $attr) {
-            $method->addBody("'{$attr->name}' => \$data['{$attr->name}'],");
-        }
+        $config->model_attributes->filter(fn(ModelAttributeConfig $attr) => !$attr->type instanceof IdentifierAttr)
+                                 ->each(fn(ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => \$data['{$attr->name}'],"));
 
         $method->addBody(']);')
                ->setReturnType('void');
@@ -90,6 +88,7 @@ class ControllerTestGenerator extends FileGenerator
     public function destroyMethod(ControllerTestConfig $config, ClassType $class): void
     {
         $class->addMethod('it_deletes_a_model')
+            ->addComment(' @test')
                         ->setVisibility('public')
                         ->addBody("\$model = {$config->modelClassName()}::factory()->create();\n")
                         ->addBody("\$this->delete(action([{$config->controllerClassName()}::class, 'destroy'], \$model->id))->assertOk();")
@@ -101,6 +100,7 @@ class ControllerTestGenerator extends FileGenerator
     public function indexMethod(ControllerTestConfig $config, ClassType $class): void
     {
         $method = $class->addMethod('it_returns_a_collection_of_models')
+            ->addComment(' @test')
                         ->setVisibility('public')
                         ->addBody("\$models = {$config->modelClassName()}::factory(1)->create();\n")
                         ->addBody("\$this->get(action([{$config->controllerClassName()}::class, 'index']))->assertOk()")
@@ -108,7 +108,7 @@ class ControllerTestGenerator extends FileGenerator
                         ->addBody("[");
 
         foreach ($config->model_attributes as $attr) {
-            $method->addBody("'{$attr->name}' => \$models[0]->{$attr->name},");
+            $method->addBody("'{$attr->name}' => \$models[0]->{$attr->type->resourceMapProperty($attr)},");
         }
 
         $method->addBody(']]);')
@@ -119,13 +119,14 @@ class ControllerTestGenerator extends FileGenerator
     public function showMethod(ControllerTestConfig $config, ClassType $class): void
     {
         $method = $class->addMethod('it_returns_a_model')
+            ->addComment(' @test')
                         ->setVisibility('public')
                         ->addBody("\$model = {$config->modelClassName()}::factory()->create();\n")
-                        ->addBody("\$this->get(action([{$config->controllerClassName()}::class, 'show'], \$model->id))->assertOk();")
-                        ->addBody("\$this->assertExactJson([");
+                        ->addBody("\$this->get(action([{$config->controllerClassName()}::class, 'show'], \$model->id))->assertOk()")
+                        ->addBody("->assertExactJson([");
 
         foreach ($config->model_attributes as $attr) {
-            $method->addBody("'{$attr->name}' => \$model->{$attr->name},");
+            $method->addBody("'{$attr->name}' => \$model->{$attr->type->resourceMapProperty($attr)},");
         }
 
         $method->addBody(']);')

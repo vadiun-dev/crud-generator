@@ -2,6 +2,7 @@
 
 namespace Hitocean\CrudGenerator\Generators\FileConfigs;
 
+use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
 use Illuminate\Support\Collection;
 
 class FactoryConfig implements FileConfig

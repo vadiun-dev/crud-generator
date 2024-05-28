@@ -2,6 +2,7 @@
 
 namespace Hitocean\CrudGenerator\ModelAttributeTypes;
 
+use Exception;
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
 
 class BooleanAttr implements ModelAttributeType
@@ -20,7 +21,10 @@ class BooleanAttr implements ModelAttributeType
     {
         return '$this->faker->boolean';
     }
-
+    public function fakerTestFunction(): string
+    {
+        return $this->fakerFunction();
+    }
     public function migrationFunction(ModelAttributeConfig $config): string
     {
         $base = "boolean('{$config->name}')";
@@ -32,9 +36,29 @@ class BooleanAttr implements ModelAttributeType
         return $base;
     }
 
+    public function needsResourceMap(): bool
+    {
+        return false;
+    }
+
+    public function resourceMapProperty(ModelAttributeConfig $config): string
+    {
+        return $config->name;
+    }
+
     public function dataType(ModelAttributeConfig $config): string
     {
         return 'bool';
+    }
+
+    public function needsDataAttribute(): bool
+    {
+        return false;
+    }
+
+    public function dataAttribute(): string
+    {
+        throw new Exception('BooleanAttr does not has a data Attribute.');
     }
 
     public function resourceType(ModelAttributeConfig $config): string

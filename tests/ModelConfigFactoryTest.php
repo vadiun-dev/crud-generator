@@ -10,7 +10,8 @@ use Hitocean\CrudGenerator\ModelConfigFactory;
 it('validates data structure', function () {
     $data = [
         'modelName' => 'Client',
-        'folder' => 'Admin/Client',
+        'root_folder' => 'Admin/Client',
+        'root_namespace' => 'Admin\Client',
         'attributes' => [
             ['name' => 'srl', 'type' => 'int'],
             ['name' => 'num_client_seidor', 'type' => 'int'],
@@ -38,12 +39,13 @@ it('throws exception when missing keys', function () {
     ];
 
     ModelConfigFactory::makeConfig($data);
-})->throws(\Exception::class, 'Missing keys: modelName, folder, tableName, makeCrud');
+})->throws(\Exception::class, 'Missing keys: modelName, root_folder, root_namespace, tableName, makeCrud');
 
 it(' throws exception when attributes is not an array', function () {
     $data = [
         'modelName' => 'Client',
-        'folder' => 'Admin/Client',
+        'root_folder' => 'Admin/Client',
+        'root_namespace' => 'Admin\Client',
         'attributes' => 'not an array',
         'tableName' => 'clients',
         'makeCrud' => true,
@@ -55,7 +57,8 @@ it(' throws exception when attributes is not an array', function () {
 it('throws exception when attribute name or type is missing', function ($attribute) {
     $data = [
         'modelName' => 'Client',
-        'folder' => 'Admin/Client',
+        'root_folder' => 'Admin/Client',
+        'root_namespace' => 'Admin\Client',
         'attributes' => [
             $attribute,
         ],
@@ -75,7 +78,8 @@ it('maps attributes types', function ($type, $expected) {
 
     $data = [
         'modelName' => 'Client',
-        'folder' => 'Admin/Client',
+        'root_folder' => 'Admin/Client',
+        'root_namespace' => 'Admin\Client',
         'attributes' => [
             ['name' => 'srl', 'type' => $type],
         ],
@@ -100,7 +104,8 @@ it('maps optional attributes types', function ($type, $expected) {
 
     $data = [
         'modelName' => 'Client',
-        'folder' => 'Admin/Client',
+        'root_folder' => 'Admin/Client',
+        'root_namespace' => 'Admin\Client',
         'attributes' => [
             ['name' => 'srl', 'type' => $type.'?'],
             ['name' => 'srl', 'type' => '?'.$type],

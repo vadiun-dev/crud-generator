@@ -35,6 +35,10 @@ class DataGenerator extends FileGenerator
                 $property->setType($attr->type->importPath());
             } else {
                 $property->setType($attr->type->dataType($attr));
+
+            }
+            if($attr->type->needsDataAttribute()){
+                $property->addAttribute($attr->type->dataAttribute(), [$attr->type->dataAttributeParam()]);
             }
         }
 

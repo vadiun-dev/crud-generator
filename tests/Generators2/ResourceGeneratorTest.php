@@ -24,8 +24,9 @@ beforeEach(function ()
                                                                           'first_name',
                                                                           new StringAttr(),
                                                                           false
-                                                                      ),
-                                                                  ])
+                                                                      )
+                                                                  ]),
+        'Src\Models\StoreClient'
     );
 
     $this->generator->create($this->simpleModelConfig);
@@ -64,7 +65,8 @@ it('has correct imports', function(ModelAttributeType $attribute, $import, $use)
                                                      $attribute,
                                                      false
                                                  ),
-                                             ])
+                                             ]),
+        'Src\Models\Client2'
     );
 
     $this->generator->create($config);
@@ -73,10 +75,10 @@ it('has correct imports', function(ModelAttributeType $attribute, $import, $use)
     $classFile = $file->getClasses()['Src\Resources\StoreClient2Resource'];
 
     if(is_null($import)){
-        expect($classFile->getNamespace()->getUses())->toBe(['Data' => 'Spatie\LaravelData\Data']);
+        expect($classFile->getNamespace()->getUses())->toBe(['Data' => 'Spatie\LaravelData\Data', 'Client2' => 'Src\Models\Client2']);
 
     } else {
-        expect($classFile->getNamespace()->getUses())->toBe([$import => $use,  'Data' => 'Spatie\LaravelData\Data']);
+        expect($classFile->getNamespace()->getUses())->toBe([$import => $use,  'Data' => 'Spatie\LaravelData\Data', 'Client2' => 'Src\Models\Client2']);
     }
 
 })->with([
@@ -89,8 +91,10 @@ it('has correct imports', function(ModelAttributeType $attribute, $import, $use)
 
 it('has correct properties', function ()
 {
-    expect($this->classFile->getProperties())->toHaveCount(1)
-        ->and($this->classFile->getProperties()['first_name']->getName())->toBe('first_name')
-        ->and($this->classFile->getProperties()['first_name']->getType())->toBe('string')
-        ->and($this->classFile->getProperties()['first_name']->getVisibility())->toBe('public');
+    $method = $this->classFile->getMethods()['__construct'];
+    expect($this->classFile->getMethods())->toHaveKey('__construct')
+                                          ->and($method->getParameters())->toHaveCount(1)
+        ->and($method->getParameters()['first_name']->getName())->toBe('first_name')
+        ->and($method->getParameters()['first_name']->getType())->toBe('string')
+        ->and($method->getParameters()['first_name']->getVisibility())->toBe('public');
 });

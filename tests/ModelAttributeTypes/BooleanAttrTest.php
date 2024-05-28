@@ -24,3 +24,28 @@ it('returns migration function', function () {
     $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, true);
     expect($booleanAttr->migrationFunction($config))->toBe("boolean('name')->nullable()");
 });
+
+it('needs resource map', function () {
+    $booleanAttr = new \Hitocean\CrudGenerator\ModelAttributeTypes\BooleanAttr();
+    expect($booleanAttr->needsResourceMap())->toBeFalse();
+});
+
+it('returns resource map property', function () {
+    $booleanAttr = new \Hitocean\CrudGenerator\ModelAttributeTypes\BooleanAttr();
+
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, false);
+    expect($booleanAttr->resourceMapProperty($config))->toBe('name');
+
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, true);
+    expect($booleanAttr->resourceMapProperty($config))->toBe('name');
+});
+
+it('returns resource type', function () {
+    $booleanAttr = new \Hitocean\CrudGenerator\ModelAttributeTypes\BooleanAttr();
+
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, false);
+    expect($booleanAttr->resourceType($config))->toBe('bool');
+
+    $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('name', $booleanAttr, true);
+    expect($booleanAttr->resourceType($config))->toBe('?bool');
+});
