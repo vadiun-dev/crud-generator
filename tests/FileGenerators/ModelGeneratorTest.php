@@ -20,10 +20,10 @@ beforeEach(function () {
 
     $this->generator->create($this->simpleModelConfig);
 
-    $file = Nette\PhpGenerator\PhpFile::fromCode(file_get_contents(base_path('Client/Models/Client.php')));
+    $file = Nette\PhpGenerator\PhpFile::fromCode(file_get_contents(base_path('Client/Client.php')));
     $class = $file->getClasses();
 
-    $this->classFile = $class['Client\Models\Client'];
+    $this->classFile = $class['Client\Client'];
 });
 
 afterEach(function () {
@@ -32,11 +32,11 @@ afterEach(function () {
 });
 
 it('creates a model file', function () {
-    expect(file_exists(base_path('Client/Models/Client.php')))->toBeTrue();
+    expect(file_exists(base_path('Client/Client.php')))->toBeTrue();
 });
 
 it('has correct namespace', function () {
-    expect($this->classFile->getNamespace()->getName())->toBe('Client\Models');
+    expect($this->classFile->getNamespace()->getName())->toBe('Client');
 });
 
 it('has correct class name', function () {

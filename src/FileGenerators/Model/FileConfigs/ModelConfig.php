@@ -24,7 +24,7 @@ class ModelConfig implements FileConfig
 
     public function filePath(): string
     {
-        return base_path($this->root_folder.'/Models/'.$this->fileName());
+        return base_path($this->root_folder.'/'.$this->fileName());
     }
 
     public function className(): string
@@ -34,7 +34,7 @@ class ModelConfig implements FileConfig
 
     public function namespace(): string
     {
-        return $this->root_namespace.'\\Models';
+        return $this->root_namespace;
     }
 
     public function import(): string
