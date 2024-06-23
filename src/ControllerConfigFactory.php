@@ -86,13 +86,13 @@ class ControllerConfigFactory
     public static function validateDataStructure(array $data): void
     {
         $requiredKeys = ['controller_name', 'root_folder', 'model_attributes', 'root_namespace', 'model_import'];
-        $missingKeys  = collect($requiredKeys)->diff(array_keys($data));
+        $missingKeys = collect($requiredKeys)->diff(array_keys($data));
 
         if ($missingKeys->isNotEmpty()) {
-            throw new \Exception('Missing keys: ' . $missingKeys->implode(', '));
+            throw new \Exception('Missing keys: '.$missingKeys->implode(', '));
         }
 
-        if (!is_array($data['model_attributes'])) {
+        if (! is_array($data['model_attributes'])) {
             throw new \Exception('Attributes must be an array');
         }
 
@@ -100,7 +100,7 @@ class ControllerConfigFactory
         $missingAttributeKeys = $attributes->map(
             fn ($attribute) => collect(['name', 'type'])->diff(array_keys($attribute))
         )
-                                           ->filter(fn ($missingKeys) => $missingKeys->isNotEmpty());
+            ->filter(fn ($missingKeys) => $missingKeys->isNotEmpty());
 
         if ($missingAttributeKeys->isNotEmpty()) {
             throw new \Exception('Every attribute must have a name and a type');

@@ -65,7 +65,6 @@ class BelongsToAttr implements ModelAttributeType
         throw new Exception('BelongsToAttr does not has a data Attribute.');
     }
 
-
     public function dataType(ModelAttributeConfig $config): string
     {
         $base = 'int';

@@ -60,8 +60,7 @@ class StringAttr implements ModelAttributeType
 
     public function resourceType(ModelAttributeConfig $config): string
     {
-        $base =  'string';
-
+        $base = 'string';
 
         if ($config->isNullable) {
             return '?'.$base;

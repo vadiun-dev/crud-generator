@@ -24,32 +24,29 @@ class ResourceGenerator extends FileGenerator
         $class = $namespace->addClass($config->className())
             ->setExtends($spatie_import);
 
-
         $contrusct = $class->addMethod('__construct');
         /** @var ModelAttributeConfig $attr */
         foreach ($config->attributes as $attr) {
 
             $property = $contrusct->addPromotedParameter($attr->name)->setVisibility('public');
-            if($attr->type->needsImport()){
+            if ($attr->type->needsImport()) {
 
                 $namespace->addUse($attr->type->importPath());
             }
-                $property->setType($attr->type->resourceType($attr));
+            $property->setType($attr->type->resourceType($attr));
         }
 
-        if($config->attributes->filter(fn($attr) => $attr->type->needsResourceMap()))
-        {
+        if ($config->attributes->filter(fn ($attr) => $attr->type->needsResourceMap())) {
             $method = $class->addMethod('fromModel')
-                            ->setReturnType('self')
-                            ->setStatic()
-                            ->setVisibility('public');
+                ->setReturnType('self')
+                ->setStatic()
+                ->setVisibility('public');
 
             $method->addParameter('model')->setType($config->model_import);
 
             $method->addBody('return new self(')
-                ->addBody($config->attributes->map(fn(ModelAttributeConfig $attr) => "\$model->{$attr->type->resourceMapProperty($attr)},")->join("\n"))
-                ->addBody(');')
-            ;
+                ->addBody($config->attributes->map(fn (ModelAttributeConfig $attr) => "\$model->{$attr->type->resourceMapProperty($attr)},")->join("\n"))
+                ->addBody(');');
         }
 
         $this->createFile($config->filePath(), $file);

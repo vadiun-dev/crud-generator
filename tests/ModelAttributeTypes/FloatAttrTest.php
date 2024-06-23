@@ -32,7 +32,6 @@ it('needs resource type', function () {
     expect($booleanAttr->needsResourceMap())->toBeFalse();
 });
 
-
 it('resource map property', function () {
     $booleanAttr = new FloatAttr();
 

@@ -27,6 +27,7 @@ class FileAttr implements ModelAttributeType
     {
         throw new Exception('It does not have a function.');
     }
+
     public function needsResourceMap(): bool
     {
         return false;
@@ -36,10 +37,12 @@ class FileAttr implements ModelAttributeType
     {
         return $config->name;
     }
+
     public function fakerTestFunction(): string
     {
         return $this->fakerFunction();
     }
+
     public function migrationFunction(ModelAttributeConfig $config): string
     {
         throw new Exception('File do not use migrations.');

@@ -66,4 +66,3 @@ it('returns resource type', function () {
     $config = new \Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig('client_id', $this->attr, false);
     expect($this->attr->resourceType($config))->toBe('int');
 });
-

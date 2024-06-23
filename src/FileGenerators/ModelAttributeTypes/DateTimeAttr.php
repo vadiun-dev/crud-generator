@@ -21,6 +21,7 @@ class DateTimeAttr implements ModelAttributeType
     {
         return '$this->faker->dateTime';
     }
+
     public function fakerTestFunction(): string
     {
         return $this->fakerFunction().'->format("Y-m-d H:i:s")';
@@ -60,8 +61,7 @@ class DateTimeAttr implements ModelAttributeType
     public function resourceType(ModelAttributeConfig $config): string
     {
 
-        $base =  'string';
-
+        $base = 'string';
 
         if ($config->isNullable) {
             return '?'.$base;

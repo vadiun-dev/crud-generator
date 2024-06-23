@@ -58,7 +58,7 @@ it('detiene la ejecución si el controlador ya existe', function () {
         ->with(base_path('src/Application/Test/Controllers/TestController.php'))
         ->andReturn(true);
 
-    artisan('make:hit-resource-controller-config', ['controllerName' => 'TestController'])
+    artisan('make:hit-controller-config', ['controllerName' => 'TestController'])
          ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'Test')
          ->expectsOutput('El archivo ' . base_path('src/Application/Test/Controllers/TestController.php') . ' ya existe. Deteniendo la ejecución.')
          ->assertExitCode(1)
@@ -70,7 +70,7 @@ it('prompts for the controller name if not provided', function (string $controll
 {
     mockModelHelper([['name' => 'name', 'type' => 'string']]);
 
-    artisan('make:hit-resource-controller-config')
+    artisan('make:hit-controller-config')
         ->expectsQuestion('¿Cuál es el nombre del controlador?', $controller_name)
         ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'User')
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')
@@ -94,7 +94,7 @@ it('prompts for the folder name', function (string $folder_name, string $path, s
 {
     mockModelHelper([['name' => 'name', 'type' => 'string']]);
 
-    artisan('make:hit-resource-controller-config', ['controllerName' => 'TestController'])
+    artisan('make:hit-controller-config', ['controllerName' => 'TestController'])
         ->expectsQuestion('¿Cuál es el nombre de la carpeta?', $folder_name)
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')
         ->expectsQuestion('¿Desea utilizar todas las propiedades del modelo?', true)
@@ -128,7 +128,7 @@ it('it selects all attributes from model', function ()
                     ]);
 
 
-    artisan('make:hit-resource-controller-config')
+    artisan('make:hit-controller-config')
         ->expectsQuestion('¿Cuál es el nombre del controlador?', 'User')
         ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'User')
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')
@@ -184,7 +184,7 @@ it('it selects specifc attributes from model', function ()
                         ]
                     ]);
 
-    artisan('make:hit-resource-controller-config')
+    artisan('make:hit-controller-config')
         ->expectsQuestion('¿Cuál es el nombre del controlador?', 'User')
         ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'User')
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')
@@ -232,7 +232,7 @@ it('it generates attributes correctly', function (string $type, string $optional
 
     mockModelHelper([['name' => 'name', 'type' => 'string']]);
 
-    artisan('make:hit-resource-controller-config')
+    artisan('make:hit-controller-config')
         ->expectsQuestion('¿Cuál es el nombre del controlador?', 'User')
         ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'User')
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')
@@ -297,7 +297,7 @@ it('ask for methods', function (string $method_name, string $route_method, ?stri
                         ]
                     ]);
 
-    artisan('make:hit-resource-controller-config')
+    artisan('make:hit-controller-config')
         ->expectsQuestion('¿Cuál es el nombre del controlador?', 'User')
         ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'User')
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')

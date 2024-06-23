@@ -63,8 +63,7 @@ class ModelConfigFactory
     public static function validateDataStructure(array $data): void
     {
         $requiredKeys = ['modelName', 'root_folder', 'root_namespace', 'attributes', 'tableName', 'makeCrud'];
-        $missingKeys  = collect($requiredKeys)->diff(array_keys($data));
-
+        $missingKeys = collect($requiredKeys)->diff(array_keys($data));
 
         if ($missingKeys->isNotEmpty()) {
             throw new \Exception('Missing keys: '.$missingKeys->implode(', '));
