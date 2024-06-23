@@ -2,10 +2,10 @@
 
 namespace Hitocean\CrudGenerator;
 
-use Hitocean\CrudGenerator\Commands\CreateModelJsonController;
 use Hitocean\CrudGenerator\Commands\CreateJsonModel;
-use Hitocean\CrudGenerator\Commands\ModelGeneratorCommand;
+use Hitocean\CrudGenerator\Commands\CreateModelJsonController;
 use Hitocean\CrudGenerator\Commands\GenerateControllerFilesCommand;
+use Hitocean\CrudGenerator\Commands\ModelGeneratorCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -26,6 +26,6 @@ class CrudGeneratorServiceProvider extends PackageServiceProvider
             ->hasCommand(ModelGeneratorCommand::class)
             ->hasCommand(CreateModelJsonController::class)
             ->hasCommand(GenerateControllerFilesCommand::class)
-        ->hasCommand(CreateJsonModel::class);
+            ->hasCommand(CreateJsonModel::class);
     }
 }

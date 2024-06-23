@@ -11,7 +11,7 @@ class ModelControllerDeleteMethod
     public static function create(Collection $inputs, string $method_name, string $model_name, ClassType $class): Method
     {
         $method = $class->addMethod($method_name)
-                        ->setVisibility('public');
+            ->setVisibility('public');
 
         if ($inputs->isNotEmpty()) {
             $method->addBody('$data = [');
@@ -22,6 +22,7 @@ class ModelControllerDeleteMethod
         }
 
         $method->addBody("$model_name::destroy(\$id);");
+
         return $method;
     }
 }

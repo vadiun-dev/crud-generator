@@ -11,9 +11,7 @@ class ModelControllerShowMethod
     public static function create(Collection $inputs, string $method_name, string $model_name, ClassType $class, ?string $resource_import): Method
     {
         $method = $class->addMethod($method_name)
-                        ->setVisibility('public');
-
-
+            ->setVisibility('public');
 
         $resourceClass = static::getShortClassName($resource_import);
         $method->addBody("return $resourceClass::from($model_name::findOrFail(\$id));");
@@ -24,6 +22,7 @@ class ModelControllerShowMethod
     private static function getShortClassName(string $class): string
     {
         $parts = explode('\\', $class);
+
         return end($parts);
     }
 }

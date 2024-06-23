@@ -18,73 +18,73 @@ beforeEach(function () {
         'Src\\Application\\Cafetera\\Controllers',
         'Src\\Application\\Cafetera\\Controllers',
         collect([
-                    new ControllerMethodConfig(
-                        'index',
-                        'GET',
-                        collect(),
-                        null,
-                        null,
-                        'App\\Http\\Resources\\CafeteraResource',
-                        'App\\Http\\Resources\\CafeteraResource',
-                        collect([new ModelAttributeConfig('title', new StringAttr())])
-                    ),
-                    new ControllerMethodConfig(
-                        'store',
-                        'POST',
-                        collect([
-                                    new ModelAttributeConfig('title', new StringAttr()),
-                                    new ModelAttributeConfig('description', new StringAttr())
-                                ]),
-
-                        'App\\Http\\Requests\\StoreCafeteraRequest',
-                        'App\\Http\\Requests\\StoreCafeteraRequest',
-                        'App\\Http\\Resources\\CafeteraResource',
-                        'App\\Http\\Resources\\CafeteraResource',
-                        collect([new ModelAttributeConfig('title', new StringAttr())])
-                    ),
-                    new ControllerMethodConfig(
-                        'update',
-                        'put',
-                        collect([
-                                    new ModelAttributeConfig('title', new StringAttr()),
-                                    new ModelAttributeConfig('description', new StringAttr())
-                                ]),
-
-                        'App\\Http\\Requests\\StoreCafeteraRequest',
-                        'App\\Http\\Requests\\StoreCafeteraRequest',
-                        'App\\Http\\Resources\\CafeteraResource',
-                        'App\\Http\\Resources\\CafeteraResource',
-                        collect([new ModelAttributeConfig('title', new StringAttr())])
-                    ),
-                    new ControllerMethodConfig(
-                        'destroy',
-                        'delete',
-                        collect([
-                                    new ModelAttributeConfig('title', new StringAttr()),
-                                    new ModelAttributeConfig('description', new StringAttr())
-                                ]),
-
-                        'App\\Http\\Requests\\StoreCafeteraRequest',
-                        'App\\Http\\Requests\\StoreCafeteraRequest',
-                        'App\\Http\\Resources\\CafeteraResource',
-                        'App\\Http\\Resources\\CafeteraResource',
-                        collect([new ModelAttributeConfig('title', new StringAttr())])
-                    ),
-                        new ControllerMethodConfig(
-                            'show',
-                            'get',
-                            collect([
-                                        new ModelAttributeConfig('title', new StringAttr()),
-                                        new ModelAttributeConfig('description', new StringAttr())
-                                    ]),
-
-                            'App\\Http\\Requests\\StoreCafeteraRequest',
-                            'App\\Http\\Requests\\StoreCafeteraRequest',
-                            'App\\Http\\Resources\\CafeteraResource',
-                            'App\\Http\\Resources\\CafeteraResource',
-                            collect([new ModelAttributeConfig('title', new StringAttr())])
-                        )
+            new ControllerMethodConfig(
+                'index',
+                'GET',
+                collect(),
+                null,
+                null,
+                'App\\Http\\Resources\\CafeteraResource',
+                'App\\Http\\Resources\\CafeteraResource',
+                collect([new ModelAttributeConfig('title', new StringAttr())])
+            ),
+            new ControllerMethodConfig(
+                'store',
+                'POST',
+                collect([
+                    new ModelAttributeConfig('title', new StringAttr()),
+                    new ModelAttributeConfig('description', new StringAttr()),
                 ]),
+
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Resources\\CafeteraResource',
+                'App\\Http\\Resources\\CafeteraResource',
+                collect([new ModelAttributeConfig('title', new StringAttr())])
+            ),
+            new ControllerMethodConfig(
+                'update',
+                'put',
+                collect([
+                    new ModelAttributeConfig('title', new StringAttr()),
+                    new ModelAttributeConfig('description', new StringAttr()),
+                ]),
+
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Resources\\CafeteraResource',
+                'App\\Http\\Resources\\CafeteraResource',
+                collect([new ModelAttributeConfig('title', new StringAttr())])
+            ),
+            new ControllerMethodConfig(
+                'destroy',
+                'delete',
+                collect([
+                    new ModelAttributeConfig('title', new StringAttr()),
+                    new ModelAttributeConfig('description', new StringAttr()),
+                ]),
+
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Resources\\CafeteraResource',
+                'App\\Http\\Resources\\CafeteraResource',
+                collect([new ModelAttributeConfig('title', new StringAttr())])
+            ),
+            new ControllerMethodConfig(
+                'show',
+                'get',
+                collect([
+                    new ModelAttributeConfig('title', new StringAttr()),
+                    new ModelAttributeConfig('description', new StringAttr()),
+                ]),
+
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Resources\\CafeteraResource',
+                'App\\Http\\Resources\\CafeteraResource',
+                collect([new ModelAttributeConfig('title', new StringAttr())])
+            ),
+        ]),
     );
 
     $this->generator->create($this->simpleConfig);
@@ -103,26 +103,24 @@ afterEach(function () {
 });
 
 it('creates a controller file')
-    ->expect(fn() => file_exists(base_path('src/Application/Cafetera/Controllers/CafeteraController.php')))
+    ->expect(fn () => file_exists(base_path('src/Application/Cafetera/Controllers/CafeteraController.php')))
     ->toBeTrue();
 
 it('has correct namespace')
-    ->expect(fn() => $this->classFile->getNamespace()->getName())
+    ->expect(fn () => $this->classFile->getNamespace()->getName())
     ->toBe('Src\\Application\\Cafetera\\Controllers');
 
 it('has correct class name')
-    ->expect(fn() => $this->classFile->getName())
+    ->expect(fn () => $this->classFile->getName())
     ->toBe('CafeteraController');
 
 it('has correct imports')
-    ->expect(fn() => $this->classFile->getNamespace()->getUses())
+    ->expect(fn () => $this->classFile->getNamespace()->getUses())
     ->toBe([
-               'StoreCafeteraRequest' => 'App\\Http\\Requests\\StoreCafeteraRequest',
-               'CafeteraResource' => 'App\\Http\\Resources\\CafeteraResource',
-               'Cafetera' => 'Src\\Domain\\Cafetera\\Models\\Cafetera',
-           ]);
-
-
+        'StoreCafeteraRequest' => 'App\\Http\\Requests\\StoreCafeteraRequest',
+        'CafeteraResource' => 'App\\Http\\Resources\\CafeteraResource',
+        'Cafetera' => 'Src\\Domain\\Cafetera\\Models\\Cafetera',
+    ]);
 
 it('has correct methods', function () {
     expect($this->classFile->getMethods())->toHaveKeys(['store', 'index', 'show', 'update', 'destroy']);

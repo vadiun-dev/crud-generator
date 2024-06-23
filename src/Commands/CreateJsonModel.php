@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
@@ -17,14 +18,12 @@ class CreateJsonModel extends Command
 
     protected $description = 'Genera un archivo JSON en /generators/models';
 
-
-
     public function handle(ModelHelper $helper): void
     {
         $allModels = $helper::getAllModels();
         $modelName = $this->argument('modelName');
 
-        while (!$modelName) {
+        while (! $modelName) {
             $modelName = text(
                 label: '¿Cuál es el nombre del modelo?',
                 required: true
@@ -39,10 +38,10 @@ class CreateJsonModel extends Command
         );
 
         // Asegurar que el prefijo 'src/Domain' esté presente en root_folder
-        $rootFolder = 'src/Domain/' . ltrim($folderName, '/').'/Models';
+        $rootFolder = 'src/Domain/'.ltrim($folderName, '/').'/Models';
 
         // Generar root_namespace basado en rootFolder
-        $rootNamespace = 'Src\\Domain\\' . str_replace('/', '\\', $folderName) . '\\Models';
+        $rootNamespace = 'Src\\Domain\\'.str_replace('/', '\\', $folderName).'\\Models';
 
         $attributes = $this->collectAttributes($allModels);
 
@@ -57,11 +56,11 @@ class CreateJsonModel extends Command
 
         $directory = base_path('generators/models');
 
-        if (!File::exists($directory)) {
+        if (! File::exists($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
 
-        $filePath = $directory . '/' . $modelName . '.json';
+        $filePath = $directory.'/'.$modelName.'.json';
 
         File::put($filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
@@ -106,13 +105,13 @@ class CreateJsonModel extends Command
                     'type' => 'belongsTo',
                     'model_import' => $modelImport,
                     'table' => $table,
-                    'relation_name' => $relationName
+                    'relation_name' => $relationName,
                 ];
             } else {
                 $optional = confirm('¿El atributo es opcional?', false);
 
                 if ($optional) {
-                    $type = '?' . $type;
+                    $type = '?'.$type;
                 }
 
                 $attributes[] = ['name' => $name, 'type' => $type];
@@ -121,6 +120,4 @@ class CreateJsonModel extends Command
 
         return $attributes;
     }
-
-
 }

@@ -16,8 +16,7 @@ class ControllerTestConfig implements FileConfig
         public string $root_namespace,
         /** @var Collection<ControllerMethodConfig> */
         public Collection $methods
-    ) {
-    }
+    ) {}
 
     public function fileName(): string
     {

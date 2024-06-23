@@ -10,6 +10,5 @@ class ModelAttributeConfig
         public string $name,
         public ModelAttributeType $type,
         public bool $isNullable = false,
-    ) {
-    }
+    ) {}
 }

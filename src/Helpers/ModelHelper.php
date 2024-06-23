@@ -2,12 +2,13 @@
 
 namespace Hitocean\CrudGenerator\Helpers;
 
+use const PATHINFO_FILENAME;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 use ReflectionClass;
-use Illuminate\Support\Collection;
+
 use function base_path;
 use function class_basename;
 use function collect;
@@ -15,14 +16,11 @@ use function compact;
 use function is_subclass_of;
 use function pathinfo;
 use function preg_match;
-use const PATHINFO_FILENAME;
 
 class ModelHelper
 {
     /**
      * Get all models in the project.
-     *
-     * @return \Illuminate\Support\Collection
      */
     public static function getAllModels(): Collection
     {
@@ -38,8 +36,8 @@ class ModelHelper
 
                     $classname = pathinfo($file->getFilename(), PATHINFO_FILENAME);
 
-                    $fullClass = $namespace . $classname;
-                    if (is_subclass_of($fullClass, 'Illuminate\Database\Eloquent\Model') && !(new \ReflectionClass($fullClass))->isAbstract()) {
+                    $fullClass = $namespace.$classname;
+                    if (is_subclass_of($fullClass, 'Illuminate\Database\Eloquent\Model') && ! (new \ReflectionClass($fullClass))->isAbstract()) {
                         $models->push(static::getModelDetails($fullClass));
                     }
                 }
@@ -49,15 +47,9 @@ class ModelHelper
         return $models;
     }
 
-
     /**
      * Get detailed information about the model.
-     *
-     * @param string $modelClass
-     * @return array
      */
-
-
     private static function getModelDetails(string $modelClass): array
     {
         $modelInstance = new $modelClass;
@@ -78,7 +70,6 @@ class ModelHelper
 
         return compact('name', 'import', 'table', 'properties');
     }
-
 
     private static function mapColumnTypeToPhpType(string $columnType): string
     {
@@ -104,21 +95,19 @@ class ModelHelper
             'json' => 'array',
         ];
 
-
         return $typeMap[$columnType] ?? 'mixed';
     }
+
     /**
      * Get the namespace of the class from a file.
-     *
-     * @param string $filePath
-     * @return string
      */
     private static function getNamespace(string $filePath): string
     {
         $content = File::get($filePath);
         if (preg_match('/namespace\s+(.+?);/', $content, $matches)) {
-            return $matches[1] . '\\';
+            return $matches[1].'\\';
         }
+
         return '';
     }
 }

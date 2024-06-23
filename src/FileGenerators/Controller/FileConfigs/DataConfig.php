@@ -14,8 +14,7 @@ class DataConfig implements FileConfig
         public string $root_namespace,
         /** @var Collection<ModelAttributeConfig> */
         public Collection $attributes,
-    ) {
-    }
+    ) {}
 
     public function fileName(): string
     {

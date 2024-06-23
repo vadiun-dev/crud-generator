@@ -11,8 +11,7 @@ class BelongsToAttr implements ModelAttributeType
         private string $related_model_import,
         private string $related_model_table,
         private string $relation_name
-    ) {
-    }
+    ) {}
 
     public function needsModelCast(): bool
     {

@@ -12,8 +12,7 @@ class FactoryConfig implements FileConfig
         /** @var Collection<ModelAttributeConfig> */
         public Collection $attributes,
         public string $model_import
-    ) {
-    }
+    ) {}
 
     public function fileName(): string
     {

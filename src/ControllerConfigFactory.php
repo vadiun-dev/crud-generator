@@ -11,13 +11,14 @@ use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\DateTimeAttr;
 use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\FloatAttr;
 use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\IntAttr;
 use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\StringAttr;
+
 use function collect;
 
 class ControllerConfigFactory
 {
     public static function makeConfig(array $data): ModelControllerConfig
     {
-        #static::validateDataStructure($data);
+        //static::validateDataStructure($data);
 
         return new ModelControllerConfig(
             $data['controller_name'],
@@ -25,7 +26,7 @@ class ControllerConfigFactory
             $data['root_folder'],
             $data['root_namespace'],
             $data['test_path'],
-            collect($data['methods'])->map(fn($m) => new ControllerMethodConfig(
+            collect($data['methods'])->map(fn ($m) => new ControllerMethodConfig(
                 name: $m['name'],
                 route_method: $m['route_method'],
                 inputs: collect($m['inputs'])->map(

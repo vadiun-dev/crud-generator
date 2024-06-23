@@ -2,7 +2,6 @@
 
 namespace Hitocean\CrudGenerator\FileGenerators\Controller\ModelController;
 
-use Hitocean\CrudGenerator\DTOs\Controller\ModelControllerMethodConfig;
 use Hitocean\CrudGenerator\FileGenerators\Controller\FileConfigs\ControllerMethodConfig;
 use Hitocean\CrudGenerator\FileGenerators\Controller\FileConfigs\ModelControllerConfig;
 use Hitocean\CrudGenerator\FileGenerators\FileGenerator;
@@ -14,15 +13,14 @@ class ModelControllerGenerator extends FileGenerator
     /**
      * Genera el archivo del controlador basado en la configuración proporcionada.
      *
-     * @param ModelControllerConfig $config
-     * @return void
+     * @param  ModelControllerConfig  $config
      */
     public function create($config): void
     {
         $file = new PhpFile();
 
         $namespace = $file->addNamespace($config->root_namespace)
-                          ->addUse($config->model_import);
+            ->addUse($config->model_import);
 
         // Importar los data y resource de cada método en config
         foreach ($config->methods as $methodConfig) {
@@ -49,7 +47,6 @@ class ModelControllerGenerator extends FileGenerator
         }
     }
 
-
     private function defineMethod(ModelControllerConfig $config, ControllerMethodConfig $methodConfig, ClassType $class): void
     {
 
@@ -73,6 +70,4 @@ class ModelControllerGenerator extends FileGenerator
         }
 
     }
-
-
 }

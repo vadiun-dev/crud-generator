@@ -33,8 +33,7 @@ beforeEach(function () {
     $this->classFile = $class['Src\StoreClient'];
 });
 
-afterEach(function ()
-{
+afterEach(function () {
 
     File::deleteDirectory(base_path('src'));
 });
