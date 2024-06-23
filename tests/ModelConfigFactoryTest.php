@@ -37,7 +37,7 @@ it('throws exception when missing keys', function () {
     ];
 
     ModelConfigFactory::makeConfig($data);
-})->throws(\Exception::class, 'Missing keys: modelName, root_folder, root_namespace, tableName, makeCrud');
+})->throws(\Exception::class, 'Missing keys: modelName, root_folder, root_namespace, tableName');
 
 it(' throws exception when attributes is not an array', function () {
     $data = [
