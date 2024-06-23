@@ -31,11 +31,18 @@ afterEach(function () {
 beforeEach(function () {
 
     $this->method_options = [
-        'destroy',
-        'index',
-        'show',
-        'store',
-        'update',
+        0 => '',
+    1 => 0,
+    2 => 1,
+    3 => 2,
+    4 => 3,
+    5 => 4,
+    6 => 'None',
+    7 => 'destroy',
+    8 => 'index',
+    9 => 'show',
+    10 => 'store',
+    11 => 'update',
 
     ];
 });
@@ -173,7 +180,14 @@ it('it selects specifc attributes from model', function () {
         ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'User')
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')
         ->expectsQuestion('¿Desea utilizar todas las propiedades del modelo?', false)
-        ->expectsChoice('Seleccione las propiedades a utilizar', ['id', 'name'], ['id', 'id', 'name', 'name', 'size', 'size'])
+        ->expectsChoice('Seleccione las propiedades a utilizar', ['id', 'name'], [    0 => '',
+    1 => 'None',
+    2 => 'id',
+    3 => 'id',
+    4 => 'name',
+    5 => 'name',
+    6 => 'size',
+    7 => 'size'])
         ->expectsQuestion('¿Desea agregar atributos adicionales?', false)
         ->expectsChoice('Seleccione los métodos a generar', ['index'], $this->method_options)
         ->assertExitCode(0);
@@ -286,7 +300,7 @@ it('ask for methods', function (string $method_name, string $route_method, ?stri
         ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'User')
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')
         ->expectsQuestion('¿Desea utilizar todas las propiedades del modelo?', false)
-        ->expectsChoice('Seleccione las propiedades a utilizar', ['id', 'name'], ['name', 'name'])
+        ->expectsChoice('Seleccione las propiedades a utilizar', ['id', 'name'], ['', 'None','name', 'name'])
         ->expectsQuestion('¿Desea agregar atributos adicionales?', false)
         ->expectsChoice('Seleccione los métodos a generar', [$method_name], $this->method_options)
         ->assertExitCode(0);
