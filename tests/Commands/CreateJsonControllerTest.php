@@ -28,14 +28,14 @@ afterEach(function () {
 
 });
 
-beforeEach(function (){
+beforeEach(function () {
 
-    $this->method_options =  [
-                                  'destroy',
-                                  'index',
-                                  'show',
-                                  'store',
-                                  'update'
+    $this->method_options = [
+        'destroy',
+        'index',
+        'show',
+        'store',
+        'update',
 
     ];
 });
@@ -286,7 +286,7 @@ it('ask for methods', function (string $method_name, string $route_method, ?stri
         ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'User')
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')
         ->expectsQuestion('¿Desea utilizar todas las propiedades del modelo?', false)
-        ->expectsChoice('Seleccione las propiedades a utilizar', ['id', 'name'], [ 'name', 'name'])
+        ->expectsChoice('Seleccione las propiedades a utilizar', ['id', 'name'], ['name', 'name'])
         ->expectsQuestion('¿Desea agregar atributos adicionales?', false)
         ->expectsChoice('Seleccione los métodos a generar', [$method_name], $this->method_options)
         ->assertExitCode(0);
