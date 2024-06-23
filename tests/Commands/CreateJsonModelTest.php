@@ -37,7 +37,6 @@ it('prompts for the model name if not provided', function () {
         'root_folder' => 'src/Domain/User/Models',
         'root_namespace' => 'Src\\Domain\\User\\Models',
         'tableName' => 'users',
-        'crud' => true,
         'attributes' => [],
     ]);
 });
@@ -57,7 +56,6 @@ it('uses the provided model name argument', function () {
         'root_folder' => 'src/Domain/User/Models',
         'root_namespace' => 'Src\\Domain\\User\\Models',
         'tableName' => 'users',
-        'crud' => true,
         'attributes' => [],
     ]);
 });
@@ -79,7 +77,6 @@ it('it generates attributes correctly', function (string $type, string $optional
         'root_folder' => 'src/Domain/User/Models',
         'root_namespace' => 'Src\\Domain\\User\\Models',
         'tableName' => 'users',
-        'crud' => true,
         'attributes' => [
             ['name' => 'name', 'type' => $result_type],
         ],

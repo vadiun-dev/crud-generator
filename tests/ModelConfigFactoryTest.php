@@ -19,7 +19,6 @@ it('validates data structure', function () {
             ['name' => 'cuit', 'type' => 'string'],
         ],
         'tableName' => 'clients',
-        'makeCrud' => true,
     ];
 
     $modelConfig = ModelConfigFactory::makeConfig($data);
@@ -28,7 +27,6 @@ it('validates data structure', function () {
     expect($modelConfig->root_folder)->toBe('Admin/Client');
     expect($modelConfig->attributes->count())->toBe(4);
     expect($modelConfig->tableName)->toBe('clients');
-    expect($modelConfig->has_abm)->toBeTrue();
 });
 
 it('throws exception when missing keys', function () {

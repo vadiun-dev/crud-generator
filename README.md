@@ -7,20 +7,12 @@
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/crud-generator.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/crud-generator)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
-
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require vadiun-dev/crud-generator
+composer require hitocean/crud-generator
 ```
 
 You can publish and run the migrations with:
@@ -51,16 +43,51 @@ php artisan vendor:publish --tag="crud-generator-views"
 
 ## Usage
 
+### Configuracion de modelo
 ```php
-$crudGenerator = new Hitocean\CrudGenerator();
-echo $crudGenerator->echoPhrase('Hello, Hitocean!');
+php artisan make:hit-model-config
+```
+Este comando permite generar un archivo de configuracion para la generacion de un modelo. Este archivo va a estar situado en la carpeta _**generators/models**_. 
+
+El archivo generado se puede ver asi.
+
+```json
+{
+    "modelName": "Company",
+    "root_folder": "src/Domain/Company/Models",
+    "root_namespace": "Src\\Domain\\Company\\Models",
+    "tableName": "companies",
+    "crud": true,
+    "attributes": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "type": "string"
+        },
+        {
+            "name": "address",
+            "type": "?string"
+        }
+    ]
+}
+```
+En este archivo se pueden modificar todos los valores que se deseen antes de generar los archivos para el modelo. 
+
+### Crear Modelo
+```php
+php artisan make:hit-model
 ```
 
-## Testing
+Este comando permite generar un modelo con los atributos y relaciones que se definieron en el archivo de configuracion.
+Va a generar los siguientes archivos:
+- Modelo
+- Factory
+- Migracion
 
-```bash
-composer test
-```
+**Es importante destacar que al correr el comando se van a tratar de crear todos los archivos dentro de generators/models. Por lo que si un modelo ya esta creado lo va a intentar reemplazar**
 
 ## Changelog
 

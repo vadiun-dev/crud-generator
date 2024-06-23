@@ -50,7 +50,6 @@ class CreateJsonModel extends Command
             'root_folder' => str_replace('\\', '/', $rootFolder),
             'root_namespace' => $rootNamespace,
             'tableName' => Str::of($modelName)->plural()->lower()->snake()->toString(),
-            'crud' => true,
             'attributes' => $attributes,
         ];
 

@@ -2,6 +2,7 @@
 
 namespace Hitocean\CrudGenerator\FileGenerators\Model\FileConfigs;
 
+use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
 use Hitocean\CrudGenerator\FileGenerators\FileConfig;
 use Illuminate\Support\Collection;
 
@@ -14,7 +15,6 @@ class ModelConfig implements FileConfig
         /** @var Collection<ModelAttributeConfig> */
         public Collection $attributes,
         public string $tableName,
-        public bool $has_abm
     ) {}
 
     public function fileName(): string
