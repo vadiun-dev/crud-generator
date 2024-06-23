@@ -40,7 +40,7 @@ class ModelGeneratorCommand extends Command
             $migration_generator->create($config);
             $model_creator->create($config);
             $factory_creator->create(
-                new FactoryConfig($config->attributes, $config->root_namespace.'\\Models\\'.$config->className())
+                new FactoryConfig($config->attributes, $config->root_namespace.'\\'.$config->className())
             );
         }
 
