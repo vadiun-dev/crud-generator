@@ -3,7 +3,6 @@
 use Hitocean\CrudGenerator\FileGenerators\Controller\ControllerFileGenerator;
 use Hitocean\CrudGenerator\FileGenerators\Controller\FileConfigs\ControllerConfig;
 use Hitocean\CrudGenerator\FileGenerators\Controller\FileConfigs\ControllerMethodConfig;
-use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttributeType;
 use Illuminate\Support\Facades\File;
 use Nette\PhpGenerator\PhpFile;
 
@@ -17,27 +16,27 @@ beforeEach(function () {
         'tests/src/Application/Cafetera/Controllers',
         'Tests\\src\\Application\\Cafetera\\Controllers',
         collect([
-                    new ControllerMethodConfig(
-                        'index',
-                        'GET',
-                        collect(),
-                        null,
-                        null,
-                        null,
-                        null,
-                        collect()
-                    ),
-                    new ControllerMethodConfig(
-                        'store',
-                        'POST',
-                        collect(),
-                        'App\\Http\\Requests\\StoreCafeteraRequest',
-                        'App\\Http\\Requests\\StoreCafeteraRequest',
-                        'App\\Http\\Resources\\CafeteraResource',
-                        'App\\Http\\Resources\\CafeteraResource',
-                        collect()
-                    )
-                ]),
+            new ControllerMethodConfig(
+                'index',
+                'GET',
+                collect(),
+                null,
+                null,
+                null,
+                null,
+                collect()
+            ),
+            new ControllerMethodConfig(
+                'store',
+                'POST',
+                collect(),
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Requests\\StoreCafeteraRequest',
+                'App\\Http\\Resources\\CafeteraResource',
+                'App\\Http\\Resources\\CafeteraResource',
+                collect()
+            ),
+        ]),
         'tests/src/Application/Cafetera/Controllers/Tests'
     );
 
@@ -60,30 +59,30 @@ afterEach(function () {
 });
 
 it('creates a controller file')
-    ->expect(fn() => file_exists(base_path('tests/src/Application/Cafetera/Controllers/CafeteraController.php')))
+    ->expect(fn () => file_exists(base_path('tests/src/Application/Cafetera/Controllers/CafeteraController.php')))
     ->toBeTrue();
 
 it('has correct namespace')
-    ->expect(fn() => $this->classFile->getNamespace()->getName())
+    ->expect(fn () => $this->classFile->getNamespace()->getName())
     ->toBe('Tests\\src\\Application\\Cafetera\\Controllers');
 
 it('has correct class name')
-    ->expect(fn() => $this->classFile->getName())
+    ->expect(fn () => $this->classFile->getName())
     ->toBe('CafeteraController');
 
 it('has correct imports')
-    ->expect(fn() => $this->classFile->getNamespace()->getUses())
+    ->expect(fn () => $this->classFile->getNamespace()->getUses())
     ->toBe([
-               'StoreCafeteraRequest' => 'App\\Http\\Requests\\StoreCafeteraRequest',
-               'CafeteraResource' => 'App\\Http\\Resources\\CafeteraResource',
-           ]);
+        'StoreCafeteraRequest' => 'App\\Http\\Requests\\StoreCafeteraRequest',
+        'CafeteraResource' => 'App\\Http\\Resources\\CafeteraResource',
+    ]);
 
 it('has correct index method', function () {
     $method = $this->classFile->getMethods()['index'];
     expect($this->classFile->getMethods())->toHaveKey('index')
-                                          ->and($method->getBody())
-                                          ->toContain('// TODO: Implement index logic')
-                                          ->and($method->getReturnType())->toBe(null);
+        ->and($method->getBody())
+        ->toContain('// TODO: Implement index logic')
+        ->and($method->getReturnType())->toBe(null);
 });
 
 it('has correct store method', function () {
@@ -93,6 +92,6 @@ it('has correct store method', function () {
         ->and($method->getParameters()['data']->getName())->toBe('data')
         ->and($method->getParameters()['data']->getType())->toBe('\App\Http\Requests\StoreCafeteraRequest')
         ->and($method->getBody())
-          ->toContain('return /*(n*/\App\Http\Resources\CafeteraResource::from($data);')
+        ->toContain('return /*(n*/\App\Http\Resources\CafeteraResource::from($data);')
         ->and($method->getReturnType())->toBe(null);
 });

@@ -3,6 +3,7 @@
 namespace Hitocean\CrudGenerator\FileGenerators\Controller\FileConfigs;
 
 use Illuminate\Support\Collection;
+
 use function explode;
 use function implode;
 
@@ -16,8 +17,7 @@ class ModelControllerConfig
         public string $test_path,
         /** @var Collection<ControllerMethodConfig> */
         public Collection $methods,
-    ) {
-    }
+    ) {}
 
     public function fileName(): string
     {

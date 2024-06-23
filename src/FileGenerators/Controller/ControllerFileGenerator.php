@@ -11,9 +11,6 @@ class ControllerFileGenerator
 {
     /**
      * Genera un archivo para el controlador basado en la configuración proporcionada.
-     *
-     * @param ControllerConfig $config
-     * @return void
      */
     public function create(ControllerConfig $config): void
     {
@@ -32,7 +29,7 @@ class ControllerFileGenerator
         // Agregar métodos al controlador
         foreach ($config->methods as $methodConfig) {
             $method = $class->addMethod($methodConfig->name)
-                            ->setVisibility('public');
+                ->setVisibility('public');
 
             // Agregar argumento data_class_import si no es null
             if ($methodConfig->data_class_import) {
@@ -46,7 +43,7 @@ class ControllerFileGenerator
                 $method->addBody(sprintf('return %s::from($data);', $resourceClass));
                 $imports[] = $methodConfig->resource_class_import;
             } else {
-                $method->addBody('// TODO: Implement ' . $methodConfig->name . ' logic');
+                $method->addBody('// TODO: Implement '.$methodConfig->name.' logic');
             }
         }
 
@@ -66,13 +63,11 @@ class ControllerFileGenerator
 
     /**
      * Obtiene el nombre corto de una clase a partir de su nombre completamente cualificado.
-     *
-     * @param string $className
-     * @return string
      */
     private function getShortClassName(string $className): string
     {
         $parts = explode('\\', $className);
+
         return end($parts);
     }
 }

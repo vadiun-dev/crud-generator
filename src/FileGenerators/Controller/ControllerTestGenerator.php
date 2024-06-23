@@ -11,9 +11,6 @@ class ControllerTestGenerator
 {
     /**
      * Genera un archivo de test para el controlador basado en la configuración proporcionada.
-     *
-     * @param ControllerConfig $config
-     * @return void
      */
     public function create(ControllerConfig $config): void
     {
@@ -21,34 +18,34 @@ class ControllerTestGenerator
         $file = new PhpFile;
 
         // Agregar namespace
-        $namespace = $file->addNamespace($config->root_namespace . '\\Tests');
+        $namespace = $file->addNamespace($config->root_namespace.'\\Tests');
 
         // Agregar la clase del test del controlador
-        $className = $config->controller_name . 'Test';
+        $className = $config->controller_name.'Test';
         $class = $namespace->addClass($className)->setExtends('Tests\\TestCase');
 
         // Agregar los imports necesarios al namespace
         $namespace->addUse('Illuminate\\Http\\UploadedFile');
-        $namespace->addUse($config->root_namespace . '\\' . $config->controller_name);
+        $namespace->addUse($config->root_namespace.'\\'.$config->controller_name);
         $namespace->addUse('Illuminate\\Support\\Facades\\File');
         $namespace->addUse('Src\\Domain\\User\\Models\\User'); // asegurar que la clase User se importa correctamente
         $namespace->addUse('Src\\Domain\\User\\Enums\\Roles'); // asegurar que la clase Roles se importa correctamente
 
         // Agregar el método setUp al principio
         $setUpMethod = $class->addMethod('setUp')
-                             ->setVisibility('public')
-                             ->setReturnType('void')
-                             ->addBody('parent::setUp();')
-                             ->addBody('$user = User::factory()->withRole(Roles::CONTENTS)->create();')
-                             ->addBody('$this->actingAs($user);');
+            ->setVisibility('public')
+            ->setReturnType('void')
+            ->addBody('parent::setUp();')
+            ->addBody('$user = User::factory()->withRole(Roles::CONTENTS)->create();')
+            ->addBody('$this->actingAs($user);');
 
         // Crear métodos para el test del controlador basados en $config->methods
         foreach ($config->methods as $methodConfig) {
             // Dinámicamente generar un nombre de prueba basado en el método del controlador
-            $testMethod = $class->addMethod('it_' . $methodConfig->name)
-                                ->setVisibility('public')
-                                ->addComment('@test')
-                                ->setReturnType('void');
+            $testMethod = $class->addMethod('it_'.$methodConfig->name)
+                ->setVisibility('public')
+                ->addComment('@test')
+                ->setReturnType('void');
 
             // Generar $data array si hay inputs
             if ($methodConfig->inputs->isNotEmpty()) {
@@ -62,7 +59,7 @@ class ControllerTestGenerator
             }
 
             $assertMethod = strtolower($methodConfig->route_method);
-            $testMethod->addBody('$response = $this->' . $assertMethod . '(action([' . $config->controller_name . '::class, \'' . $methodConfig->name . '\']), $data ?? []);');
+            $testMethod->addBody('$response = $this->'.$assertMethod.'(action(['.$config->controller_name.'::class, \''.$methodConfig->name.'\']), $data ?? []);');
             $testMethod->addBody('$response->assertOk();');
 
             // Añadir $model y lógica de aserción si hay outputs
@@ -73,7 +70,7 @@ class ControllerTestGenerator
                 }
                 $testMethod->addBody(']);');
             } else {
-                $testMethod->addBody('// TODO: Implement assert logic for ' . $methodConfig->name);
+                $testMethod->addBody('// TODO: Implement assert logic for '.$methodConfig->name);
             }
         }
 
@@ -85,14 +82,13 @@ class ControllerTestGenerator
         File::ensureDirectoryExists(base_path($config->test_folder), 0755, true);
 
         // Escribir el archivo utilizando Laravel's File facade
-        File::put(base_path($config->test_folder . '/' . $className . '.php'), $output);
+        File::put(base_path($config->test_folder.'/'.$className.'.php'), $output);
     }
 
     /**
      * Obtiene el método de Faker adecuado para el tipo de datos de entrada.
      *
-     * @param string $type
-     * @return string
+     * @param  string  $type
      */
     private function getFakerMethod($input): string
     {

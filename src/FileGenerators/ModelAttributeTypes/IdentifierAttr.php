@@ -9,8 +9,7 @@ class IdentifierAttr implements ModelAttributeType
 {
     public function __construct(
         private string $route_parameter
-    ) {
-    }
+    ) {}
 
     public function needsModelCast(): bool
     {

@@ -18,8 +18,7 @@ class ControllerMethodConfig
         public ?string $resource_class_path,
         /** @var Collection<ModelAttributeConfig> */
         public Collection $outputs,
-    ) {
-    }
+    ) {}
 
     public function dataClassName(): string
     {
@@ -35,6 +34,7 @@ class ControllerMethodConfig
     {
         $parts = explode('/', $this->data_class_path);
         array_pop($parts);
+
         return implode('/', $parts);
     }
 
@@ -42,6 +42,7 @@ class ControllerMethodConfig
     {
         $parts = explode('/', $this->resource_class_path);
         array_pop($parts);
+
         return implode('/', $parts);
     }
 
@@ -49,6 +50,7 @@ class ControllerMethodConfig
     {
         $parts = explode('\\', $this->resource_class_import);
         array_pop($parts);
+
         return implode('\\', $parts);
     }
 
@@ -56,7 +58,7 @@ class ControllerMethodConfig
     {
         $parts = explode('\\', $this->data_class_import);
         array_pop($parts);
+
         return implode('\\', $parts);
     }
-
 }

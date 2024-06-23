@@ -15,8 +15,7 @@ class ModelConfig implements FileConfig
         public Collection $attributes,
         public string $tableName,
         public bool $has_abm
-    ) {
-    }
+    ) {}
 
     public function fileName(): string
     {

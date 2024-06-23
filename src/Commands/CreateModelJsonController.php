@@ -8,15 +8,13 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Laravel\Prompts\ConfirmPrompt;
-use Laravel\Prompts\MultiSearchPrompt;
-use Laravel\Prompts\Prompt;
+
 use function base_path;
 use function in_array;
 use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
-use function Laravel\Prompts\multiselect;
 use function ltrim;
 use function ucfirst;
 
@@ -30,27 +28,26 @@ class CreateModelJsonController extends Command
     {
         $allModels = $helper::getAllModels();
 
-        $controllerName  = $this->askControllerName();
-        $folderName      = $this->askFolderName($controllerName);
-        $model           = $this->askModel($allModels);
+        $controllerName = $this->askControllerName();
+        $folderName = $this->askFolderName($controllerName);
+        $model = $this->askModel($allModels);
         $modelAttributes = $this->askModelAttributes($model['properties']);
         $additionalAttributes = $this->askAdditionalAttributes($allModels);
 
         $methods = $this->askMethods($folderName, $modelAttributes, $additionalAttributes, $model['name']);
 
         $data = [
-            'controller_name'  => $controllerName,
-            'root_folder'      => "src/Application/$folderName/Controllers",
-            'root_namespace'   => 'Src\\Application\\' . str_replace('/', '\\', $folderName) . '\\Controllers',
-            'model_import'     => $model['import'],
-            'test_path'        => "tests/Application/{$folderName}/Controllers/{$controllerName}Test",
-            'methods'          => $methods,
+            'controller_name' => $controllerName,
+            'root_folder' => "src/Application/$folderName/Controllers",
+            'root_namespace' => 'Src\\Application\\'.str_replace('/', '\\', $folderName).'\\Controllers',
+            'model_import' => $model['import'],
+            'test_path' => "tests/Application/{$folderName}/Controllers/{$controllerName}Test",
+            'methods' => $methods,
         ];
 
         $this->createFile($controllerName, $data);
 
     }
-
 
     protected function askMethods(string $folderName, Collection $modelAttributes, array $additionalAttributes, string $model_name): array
     {
@@ -92,8 +89,9 @@ class CreateModelJsonController extends Command
     {
         $dataClasses = ['store', 'update'];
         if (in_array($methodName, $dataClasses)) {
-            return "Src\\Application\\{$folderName}\\Data\\" .ucfirst($methodName) .ucfirst($model_name). 'Data';
+            return "Src\\Application\\{$folderName}\\Data\\".ucfirst($methodName).ucfirst($model_name).'Data';
         }
+
         return null;
     }
 
@@ -101,23 +99,27 @@ class CreateModelJsonController extends Command
     {
         $dataClasses = ['store', 'update'];
         if (in_array($methodName, $dataClasses)) {
-            return "src/Application/{$folderName}/Data/" .ucfirst($methodName) .ucfirst($model_name). 'Data';
+            return "src/Application/{$folderName}/Data/".ucfirst($methodName).ucfirst($model_name).'Data';
         }
+
         return null;
     }
+
     private function getResourceClassImport(string $folderName, string $methodName, string $model_name): ?string
     {
         if (in_array($methodName, ['index', 'show'])) {
-            return "Src\\Application\\{$folderName}\\Resources\\" .ucfirst($methodName) .ucfirst($model_name). 'Resource';
+            return "Src\\Application\\{$folderName}\\Resources\\".ucfirst($methodName).ucfirst($model_name).'Resource';
         }
+
         return null;
     }
 
     private function getResourceClassPath(string $folderName, string $methodName, string $model_name): ?string
     {
         if (in_array($methodName, ['index', 'show'])) {
-            return "src/Application/{$folderName}/Resources/" .ucfirst($methodName) .ucfirst($model_name). 'Resource';
+            return "src/Application/{$folderName}/Resources/".ucfirst($methodName).ucfirst($model_name).'Resource';
         }
+
         return null;
     }
 
@@ -125,12 +127,11 @@ class CreateModelJsonController extends Command
     {
         $directory = base_path('generators/controllers');
 
-        if (!File::exists($directory)) {
+        if (! File::exists($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
 
-
-        $filePath = $directory . '/' . $controllerName . '.json';
+        $filePath = $directory.'/'.$controllerName.'.json';
 
         File::put($filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
@@ -142,13 +143,13 @@ class CreateModelJsonController extends Command
         $defaultFolderName = Str::replaceLast('Controller', '', $controllerName);
 
         $folderName = text(
-            label:    '¿Cuál es el nombre de la carpeta?',
-            default:  $defaultFolderName,
+            label: '¿Cuál es el nombre de la carpeta?',
+            default: $defaultFolderName,
             required: true
         );
 
         // Verificar si el archivo del controlador ya existe y detener la ejecución si es así
-        $controllerPath = base_path("src/Application/" . ltrim(ucfirst($folderName), '/') . "/Controllers/{$controllerName}.php");
+        $controllerPath = base_path('src/Application/'.ltrim(ucfirst($folderName), '/')."/Controllers/{$controllerName}.php");
         if (File::exists($controllerPath)) {
             $this->error("El archivo {$controllerPath} ya existe. Deteniendo la ejecución.");
             throw new Exception("El archivo {$controllerPath} ya existe.");
@@ -161,26 +162,24 @@ class CreateModelJsonController extends Command
     {
         $controllerName = $this->argument('controllerName');
 
-        if (!$controllerName) {
+        if (! $controllerName) {
             $controllerName = text(
-                label:    '¿Cuál es el nombre del controlador?',
+                label: '¿Cuál es el nombre del controlador?',
                 required: true
             );
         }
 
-        if (!Str::endsWith($controllerName, 'Controller')) {
+        if (! Str::endsWith($controllerName, 'Controller')) {
             $controllerName .= 'Controller';
         }
+
         return ucfirst($controllerName);
     }
 
-    /**
-     * @param Collection $allModels
-     */
     public function askModel(Collection $allModels)
     {
         $modelChoice = select(
-            label:   'Seleccione el modelo correspondiente al controlador',
+            label: 'Seleccione el modelo correspondiente al controlador',
             options: $allModels->pluck('name', 'import')->toArray()
         );
 
@@ -192,9 +191,9 @@ class CreateModelJsonController extends Command
     {
         $useAllProperties = confirm('¿Desea utilizar todas las propiedades del modelo?', false);
 
-        if (!$useAllProperties) {
+        if (! $useAllProperties) {
             $selectedAttributes = multiselect(
-                label:   'Seleccione las propiedades a utilizar',
+                label: 'Seleccione las propiedades a utilizar',
                 options: $properties->pluck('name', 'name')->toArray()
             );
 
@@ -208,8 +207,7 @@ class CreateModelJsonController extends Command
     {
         $attributes = [];
 
-
-        if (!confirm('¿Desea agregar atributos adicionales?', false)) {
+        if (! confirm('¿Desea agregar atributos adicionales?', false)) {
             return $attributes;
         }
 
@@ -217,7 +215,7 @@ class CreateModelJsonController extends Command
 
         while (true) {
             $name = text(
-                label:    'Nombre del atributo adicional (o presiona Enter para terminar)',
+                label: 'Nombre del atributo adicional (o presiona Enter para terminar)',
                 required: false
             );
 
@@ -233,27 +231,27 @@ class CreateModelJsonController extends Command
 
             if ($type === 'relation') {
                 $modelChoice = select(
-                    label:   'Seleccione el modelo relacionado',
+                    label: 'Seleccione el modelo relacionado',
                     options: $allModels->pluck('name', 'import')->toArray()
                 );
 
                 $relatedModel = $allModels->firstWhere('import', $modelChoice);
-                $modelImport  = $relatedModel['import'];
-                $table        = $relatedModel['table'];
+                $modelImport = $relatedModel['import'];
+                $table = $relatedModel['table'];
                 $relationName = Str::of($relatedModel['name'])->camel()->lower()->toString();
 
                 $attributes[] = [
-                    'name'          => $name,
-                    'type'          => 'belongsTo',
-                    'model_import'  => $modelImport,
-                    'table'         => $table,
+                    'name' => $name,
+                    'type' => 'belongsTo',
+                    'model_import' => $modelImport,
+                    'table' => $table,
                     'relation_name' => $relationName,
                 ];
             } else {
                 $optional = confirm('¿El atributo es opcional?', false);
 
                 if ($optional) {
-                    $type = '?' . $type;
+                    $type = '?'.$type;
                 }
 
                 $attributes[] = ['name' => $name, 'type' => $type];

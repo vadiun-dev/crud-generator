@@ -13,11 +13,10 @@ class ControllerConfig
         /** @var Collection<ControllerMethodConfig> */
         public Collection $methods,
         public string $test_folder
-    ) {
-    }
+    ) {}
+
     public function filePath(): string
     {
         return base_path($this->root_folder.'/'.$this->controller_name.'.php');
     }
-
 }

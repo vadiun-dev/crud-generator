@@ -10,8 +10,7 @@ class FileAttr implements ModelAttributeType
     public function __construct(
         public bool $isSingle,
         public string $collection_name
-    ) {
-    }
+    ) {}
 
     public function needsModelCast(): bool
     {

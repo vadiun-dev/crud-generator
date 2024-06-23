@@ -11,9 +11,9 @@ class ModelControllerTestStoreMethod
 {
     public static function create(Collection $inputs, string $method_name, string $model_name, string $controller_name, ClassType $class): Method
     {
-        $method = $class->addMethod('it_' . $method_name)
-                        ->addComment('@test')
-                        ->setVisibility('public');
+        $method = $class->addMethod('it_'.$method_name)
+            ->addComment('@test')
+            ->setVisibility('public');
 
         if ($inputs->isNotEmpty()) {
             $method->addBody('$data = [');
@@ -26,7 +26,7 @@ class ModelControllerTestStoreMethod
         $method->addBody("\$this->post(action([{$controller_name}::class, '{$method_name}']), \$data)->assertOk();");
 
         $method->addBody("\$this->assertDatabaseHas({$model_name}::class, [");
-        $inputs->each(fn(ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => \$data['{$attr->name}'],"));
+        $inputs->each(fn (ModelAttributeConfig $attr) => $method->addBody("'{$attr->name}' => \$data['{$attr->name}'],"));
         $method->addBody(']);');
 
         $method->setReturnType('void');
