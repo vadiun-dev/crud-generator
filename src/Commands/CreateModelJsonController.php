@@ -16,7 +16,6 @@ use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
 use function ltrim;
-use function ucfirst;
 
 class CreateModelJsonController extends Command
 {
