@@ -2,7 +2,7 @@
 
 namespace Hitocean\CrudGenerator\DTOs\Model;
 
-use Hitocean\CrudGenerator\ModelAttributeTypes\ModelAttributeType;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\ModelAttributeType;
 
 class ModelAttributeConfig
 {

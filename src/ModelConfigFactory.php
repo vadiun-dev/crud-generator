@@ -3,13 +3,13 @@
 namespace Hitocean\CrudGenerator;
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
-use Hitocean\CrudGenerator\ModelAttributeTypes\BelongsToAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\BooleanAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\DateTimeAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\FloatAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\IntAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
+use Hitocean\CrudGenerator\FileGenerators\Model\FileConfigs\ModelConfig;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\BelongsToAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\BooleanAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\DateTimeAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\FloatAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\IntAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\StringAttr;
 
 class ModelConfigFactory
 {

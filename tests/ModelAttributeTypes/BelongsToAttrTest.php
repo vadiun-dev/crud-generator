@@ -1,6 +1,6 @@
 <?php
 
-use Hitocean\CrudGenerator\ModelAttributeTypes\BelongsToAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\BelongsToAttr;
 
 beforeEach(function () {
     $this->attr = new BelongsToAttr('Src\Models\Client', 'clients', 'client');

@@ -1,6 +1,6 @@
 <?php
 
-use Hitocean\CrudGenerator\ModelAttributeTypes\FloatAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\FloatAttr;
 
 it('needs model cast', function () {
     $booleanAttr = new FloatAttr();

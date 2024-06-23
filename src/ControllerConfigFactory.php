@@ -3,39 +3,61 @@
 namespace Hitocean\CrudGenerator;
 
 use Hitocean\CrudGenerator\DTOs\Model\ModelAttributeConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ControllerConfig;
-use Hitocean\CrudGenerator\Generators\FileConfigs\ModelConfig;
-use Hitocean\CrudGenerator\ModelAttributeTypes\BelongsToAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\BooleanAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\DateTimeAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\FloatAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\IntAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
+use Hitocean\CrudGenerator\FileGenerators\Controller\FileConfigs\ControllerMethodConfig;
+use Hitocean\CrudGenerator\FileGenerators\Controller\FileConfigs\ModelControllerConfig;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\BelongsToAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\BooleanAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\DateTimeAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\FloatAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\IntAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\StringAttr;
+use function collect;
 
 class ControllerConfigFactory
 {
-    public static function makeConfig(array $data): ControllerConfig
+    public static function makeConfig(array $data): ModelControllerConfig
     {
-        static::validateDataStructure($data);
+        #static::validateDataStructure($data);
 
-        return new ControllerConfig(
+        return new ModelControllerConfig(
             $data['controller_name'],
             $data['model_import'],
-            collect($data['model_attributes'])->map(
-                fn ($attribute) => new ModelAttributeConfig(
-                    $attribute['name'],
-                    static::mapAttrType(
-                        $attribute['type'],
-                        $attribute['model_import'] ?? null,
-                        $attribute['table'] ?? null,
-                        $attribute['relation_name'] ?? null
-                    ),
-                    static::isOptional($attribute['type'])
-                )
-            ),
             $data['root_folder'],
             $data['root_namespace'],
-            collect()
+            $data['test_path'],
+            collect($data['methods'])->map(fn($m) => new ControllerMethodConfig(
+                name: $m['name'],
+                route_method: $m['route_method'],
+                inputs: collect($m['inputs'])->map(
+                    fn ($attribute) => new ModelAttributeConfig(
+                        $attribute['name'],
+                        static::mapAttrType(
+                            $attribute['type'],
+                            $attribute['model_import'] ?? null,
+                            $attribute['table'] ?? null,
+                            $attribute['relation_name'] ?? null
+                        ),
+                        static::isOptional($attribute['type'])
+                    )
+                ),
+                data_class_path: $m['data_class_path'],
+                data_class_import: $m['data_class_import'],
+                resource_class_import: $m['resource_class_import'],
+                resource_class_path: $m['resource_class_path'],
+                outputs: collect($m['outputs'])->map(
+                    fn ($attribute) => new ModelAttributeConfig(
+                        $attribute['name'],
+                        static::mapAttrType(
+                            $attribute['type'],
+                            $attribute['model_import'] ?? null,
+                            $attribute['table'] ?? null,
+                            $attribute['relation_name'] ?? null
+                        ),
+                        static::isOptional($attribute['type'])
+                    )
+                ),
+            )
+            )
         );
     }
 
@@ -49,7 +71,7 @@ class ControllerConfigFactory
             'string' => new StringAttr(),
             'integer', 'int' => new IntAttr(),
             'boolean', 'bool' => new BooleanAttr(),
-            'datetime' => new DateTimeAttr(),
+            'datetime', 'date' => new DateTimeAttr(),
             'float' => new FloatAttr(),
             'belongsTo' => new BelongsToAttr($model_import, $table, $relation_name),
             default => throw new \Exception("Invalid attribute type: $type"),

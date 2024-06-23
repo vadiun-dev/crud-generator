@@ -1,0 +1,94 @@
+{
+    "controller_name": "PeraController",
+    "root_folder": "src/Application/Pera/Controllers",
+    "root_namespace": "Src\\Application\\Pera\\Controllers",
+    "model_import": "Src\\Domain\\Banner\\Models\\Banner",
+    "test_path": "tests/Application/Pera/Controllers/PeraControllerTest",
+    "methods": [
+        {
+            "name": "index",
+            "route_method": "get",
+            "data_class_import": null,
+            "data_class_path": null,
+            "resource_class_import": "Src\\Application\\Pera\\Resources\\IndexBannerResource",
+            "resource_class_path": "src/Application/Pera/Resources/IndexBannerResource",
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "id",
+                    "type": "int"
+                },
+
+                {
+                    "name": "title",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "store",
+            "route_method": "post",
+            "data_class_import": "Src\\Application\\Pera\\Data\\StoreBannerData",
+            "data_class_path": "src/Application/Pera/Data/StoreBannerData",
+            "resource_class_import": null,
+            "resource_class_path": null,
+            "inputs": [
+
+                {
+                    "name": "title",
+                    "type": "string"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "update",
+            "route_method": "put",
+            "data_class_import": "Src\\Application\\Pera\\Data\\UpdateBannerData",
+            "data_class_path": "src/Application/Pera/Data/UpdateBannerData",
+            "resource_class_import": null,
+            "resource_class_path": null,
+            "inputs": [
+                {
+                    "name": "id",
+                    "type": "int"
+                },
+
+                {
+                    "name": "title",
+                    "type": "string"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "destroy",
+            "route_method": "delete",
+            "data_class_import": null,
+            "data_class_path": null,
+            "resource_class_import": null,
+            "resource_class_path": null,
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "show",
+            "route_method": "get",
+            "data_class_import": null,
+            "data_class_path": null,
+            "resource_class_import": "Src\\Application\\Pera\\Resources\\ShowBannerResource",
+            "resource_class_path": "src/Application/Pera/Resources/ShowBannerResource",
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "id",
+                    "type": "int"
+                },
+                {
+                    "name": "title",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}

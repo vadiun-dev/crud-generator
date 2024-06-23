@@ -1,6 +1,6 @@
 <?php
 
-use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\StringAttr;
 
 it('needs model cast', function () {
     $booleanAttr = new StringAttr();

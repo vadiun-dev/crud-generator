@@ -1,10 +1,10 @@
 <?php
 
-use Hitocean\CrudGenerator\ModelAttributeTypes\BooleanAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\DateTimeAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\FloatAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\IntAttr;
-use Hitocean\CrudGenerator\ModelAttributeTypes\StringAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\BooleanAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\DateTimeAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\FloatAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\IntAttr;
+use Hitocean\CrudGenerator\FileGenerators\ModelAttributeTypes\StringAttr;
 use Hitocean\CrudGenerator\ModelConfigFactory;
 
 it('validates data structure', function () {
