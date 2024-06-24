@@ -16,7 +16,7 @@ it('returns model cast', function () {
 
 it('returns faker function', function () {
 
-    expect($this->attr->fakerFunction())->toBe('Client::factory()->create()->id');
+    expect($this->attr->fakerFunction())->toBe('Client::factory()');
 });
 
 it('returns migration function', function () {

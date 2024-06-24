@@ -47,7 +47,7 @@ class ModelConfigFactory
             'string' => new StringAttr(),
             'integer', 'int' => new IntAttr(),
             'boolean', 'bool' => new BooleanAttr(),
-            'datetime' => new DateTimeAttr(),
+            'datetime', 'date' => new DateTimeAttr(),
             'float' => new FloatAttr(),
             'belongsTo' => new BelongsToAttr($model_import, $table, $relation_name),
             default => throw new \Exception("Invalid attribute type: $type"),

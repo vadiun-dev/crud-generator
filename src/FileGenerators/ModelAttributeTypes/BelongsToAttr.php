@@ -25,12 +25,12 @@ class BelongsToAttr implements ModelAttributeType
 
     public function fakerFunction(): string
     {
-        return "{$this->relatedModelClass()}::factory()->create()->id";
+        return "{$this->relatedModelClass()}::factory()";
     }
 
     public function fakerTestFunction(): string
     {
-        return $this->fakerFunction();
+        return "{$this->relatedModelClass()}::factory()->create()->id";
     }
 
     public function needsResourceMap(): bool

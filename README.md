@@ -281,7 +281,7 @@ Al ejecutar este comando se van a crear los siguientes archivos:
 
 - Es necesario registrar la ruta donde corresponda, el paquete no lo hace automaticamente.
 - Al UpdateData que se genera no tiene en cuenta que viene un route parameter hay que agregarselo manualmente. EJ:     #[FromRouteParameter('company')]
-
+- las relaciones en los controladores no estan contempladas aun.
 
 ## Changelog
 

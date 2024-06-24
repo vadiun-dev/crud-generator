@@ -75,9 +75,10 @@ class ModelHelper
     {
         $typeMap = [
             'integer' => 'int',
+            'int' => 'int',
             'bigint' => 'int',
             'smallint' => 'int',
-            'tinyint' => 'int',
+            'tinyint' => 'bool',
             'varchar' => 'string',
             'char' => 'string',
             'text' => 'string',

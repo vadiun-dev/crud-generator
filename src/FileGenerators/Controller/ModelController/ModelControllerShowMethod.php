@@ -16,6 +16,8 @@ class ModelControllerShowMethod
         $resourceClass = static::getShortClassName($resource_import);
         $method->addBody("return $resourceClass::from($model_name::findOrFail(\$id));");
 
+        $method->addParameter('id')
+            ->setType('int');
         return $method;
     }
 

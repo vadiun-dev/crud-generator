@@ -287,7 +287,7 @@ it('it generates attributes correctly', function (string $type, string $optional
     ['date', 'yes', '?date'],
 ]);
 
-it('ask for methods', function (string $method_name, string $route_method, ?string $data_import, ?string $data_path, ?string $resource_import, ?string $resource_path, array $inputs, array $outputs) {
+it('ask for methods', function (string $method_name, string $route_method, string $folder, ?string $data_import, ?string $data_path, ?string $resource_import, ?string $resource_path, array $inputs, array $outputs) {
     mockModelHelper([
         [
             'name' => 'name',
@@ -297,7 +297,7 @@ it('ask for methods', function (string $method_name, string $route_method, ?stri
 
     artisan('make:hit-controller-config')
         ->expectsQuestion('¿Cuál es el nombre del controlador?', 'User')
-        ->expectsQuestion('¿Cuál es el nombre de la carpeta?', 'User')
+        ->expectsQuestion('¿Cuál es el nombre de la carpeta?', $folder)
         ->expectsQuestion('Seleccione el modelo correspondiente al controlador', 'Src\\Domain\\User\\Models\\User')
         ->expectsQuestion('¿Desea utilizar todas las propiedades del modelo?', false)
         ->expectsChoice('Seleccione las propiedades a utilizar', ['id', 'name'], ['', 'None', 'name', 'name'])
@@ -307,11 +307,12 @@ it('ask for methods', function (string $method_name, string $route_method, ?stri
 
     $jsonContent = json_decode(File::get(base_path('generators/controllers/UserController.json')), true);
 
+    $f = str_replace('/', '\\', $folder);
     assertFileExists(base_path('generators/controllers/UserController.json'));
     expect($jsonContent)->toMatchArray([
         'controller_name' => 'UserController',
-        'root_folder' => 'src/Application/User/Controllers',
-        'root_namespace' => 'Src\\Application\\User\\Controllers',
+        'root_folder' => "src/Application/$folder/Controllers",
+        'root_namespace' => "Src\\Application\\$f\\Controllers",
         'model_import' => 'Src\\Domain\\User\\Models\\User',
         'methods' => [
             [
@@ -327,9 +328,9 @@ it('ask for methods', function (string $method_name, string $route_method, ?stri
         ],
     ]);
 })->with([
-    ['index', 'get', null, null, 'Src\\Application\\User\\Resources\\IndexUserResource', 'src/Application/User/Resources/IndexUserResource', [], [['name' => 'name', 'type' => 'string']]],
-    ['show', 'get', null, null, 'Src\\Application\\User\\Resources\\ShowUserResource', 'src/Application/User/Resources/ShowUserResource', [], [['name' => 'name', 'type' => 'string']]],
-    ['store', 'post', 'Src\\Application\\User\\Data\\StoreUserData', 'src/Application/User/Data/StoreUserData', null, null, [['name' => 'name', 'type' => 'string']], []],
-    ['update', 'put', 'Src\\Application\\User\\Data\\UpdateUserData', 'src/Application/User/Data/UpdateUserData', null, null, [['name' => 'name', 'type' => 'string']], []],
-    ['destroy', 'delete', null, null, null, null, [], []],
+    ['index', 'get', 'User', null, null, 'Src\\Application\\User\\Resources\\IndexUserResource', 'src/Application/User/Resources/IndexUserResource', [], [['name' => 'name', 'type' => 'string']]],
+    ['show', 'get', 'User/Admin', null, null, 'Src\\Application\\User\\Admin\\Resources\\ShowUserResource', 'src/Application/User/Admin/Resources/ShowUserResource', [], [['name' => 'name', 'type' => 'string']]],
+    ['store', 'post', 'User', 'Src\\Application\\User\\Data\\StoreUserData', 'src/Application/User/Data/StoreUserData', null, null, [['name' => 'name', 'type' => 'string']], []],
+    ['update', 'put', 'User/Admin', 'Src\\Application\\User\\Admin\\Data\\UpdateUserData', 'src/Application/User/Admin/Data/UpdateUserData', null, null, [['name' => 'name', 'type' => 'string']], []],
+    ['destroy', 'delete', 'User', null, null, null, null, [], []],
 ]);

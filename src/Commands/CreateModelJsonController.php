@@ -87,8 +87,9 @@ class CreateModelJsonController extends Command
     private function getDataClassImport(string $folderName, string $methodName, string $model_name): ?string
     {
         $dataClasses = ['store', 'update'];
+        $_folderName = str_replace('/', '\\', $folderName);
         if (in_array($methodName, $dataClasses)) {
-            return "Src\\Application\\{$folderName}\\Data\\".ucfirst($methodName).ucfirst($model_name).'Data';
+            return "Src\\Application\\{$_folderName}\\Data\\".ucfirst($methodName).ucfirst($model_name).'Data';
         }
 
         return null;
@@ -106,8 +107,10 @@ class CreateModelJsonController extends Command
 
     private function getResourceClassImport(string $folderName, string $methodName, string $model_name): ?string
     {
+        $_folderName = str_replace('/', '\\', $folderName);
+
         if (in_array($methodName, ['index', 'show'])) {
-            return "Src\\Application\\{$folderName}\\Resources\\".ucfirst($methodName).ucfirst($model_name).'Resource';
+            return "Src\\Application\\{$_folderName}\\Resources\\".ucfirst($methodName).ucfirst($model_name).'Resource';
         }
 
         return null;

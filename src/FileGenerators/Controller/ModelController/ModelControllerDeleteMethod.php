@@ -23,6 +23,8 @@ class ModelControllerDeleteMethod
 
         $method->addBody("$model_name::destroy(\$id);");
 
+        $method->addParameter('id')
+               ->setType('int');
         return $method;
     }
 }
